@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>转入钱包</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+
+		<style>
+			body,
+			.mui-content {
+				background-color: #FFF;
+			}
+			
+			.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+				top: 0;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: -1px;
+			}
+			
+			.mui-scroll-wrapper {
+				overflow: inherit;
+			}
+			
+			.mui-table-view-chevron .mui-table-view-cell {
+				padding-right: 15px;
+			}
+			/*---------资讯------------*/
+			
+			.logo {
+				width: 13%;
+				margin: 10px;
+				float: left;
+			}
+			
+			.title {
+				color: #000000;
+				padding: 30px 10px;
+			}
+			/*--------提现--------------*/
+			
+			.tx_content {
+				width: 100%;
+				height: 200px;
+				background-color: #5E9BB8;
+			}
+			
+			.logo2 {
+				width: 10%;
+				margin: 10px;
+				vertical-align: middle;
+			}
+			
+			.tx_logo_text {
+				color: #FFFFFF;
+			}
+			
+			.tx_logo_text2 {
+				color: #FFFFFF;
+				text-align: center;
+				margin: 20px auto;
+				font-size: 20px;
+			}
+			
+			.tx_logo_text2 span {
+				font-size: 12px;
+				margin-left: 10px;
+			}
+			
+			.tx_content2 {
+				margin-top: 20px;
+				clear: right;
+			}
+			
+			.tx_input_text {
+				margin-left: 10px;
+			}
+			
+			.tx_input_text2 {
+				font-size: 12px;
+				color: #999999;
+				float: left;
+				margin-left: 15px;
+				margin-right: 40px;
+			}
+			
+			.tx_content2 input {
+				width: 96%;
+				background-color: #F3F3F3;
+				border-radius: 0px;
+				border: none;
+				margin: 5px 2%;
+			}
+			
+			button.mui-btn {
+				width: 90%;
+				text-align: center;
+				margin: 20px 5%;
+			}
+			
+			.mui-h5 {
+				color: #0e5e84;
+			}
+			
+			.mui-col-xs-8 {
+				overflow: hidden !important;
+				white-space: nowrap !important;
+				text-overflow: ellipsis !important;
+			}
+			
+			.mask {
+				position: fixed;
+				top: 100px;
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+				width: 130px;
+				z-index: 1000;
+				display: none;
+			}
+			
+			input.phone {
+				width: 65% !important;
+				margin: 5px 0 !important;
+				margin-left: 2% !important;
+			}
+			
+			button.yzm {
+				color: #929292;
+				font-size: 12px;
+				background-color: #F3F3F3;
+				height: 40px;
+				width: 30%;
+				border-radius: 0;
+				border: none;
+				margin: 5px 0;
+				margin-left: -5px;
+				margin-right: 2%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: #5E9BB8;">
+			<h1 class="mui-title" style="color: #fffefe;">资讯</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab" style="background-color: #fff;">
+			<a class="mui-tab-item mui-active" href="#tabbar">
+				<span class="mui-tab-label">资讯</span>
+			</a>
+
+			<a class="mui-tab-item" href="#tabbar-with-contact">
+				<span class="mui-tab-label">转入钱包</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-chat">
+				<span class="mui-tab-label">记录</span>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<div id="tabbar" class="mui-control-content  mui-active">
+				<img class="logo" src="img/logo.png" />
+				<div class="title">TFchain是全球首个去中心化的众包互联驾驶的生态平台！通过激励普通驾驶者参与到互联网驾驶数据存储的生态网络建设中，并获得TF币，同时用户走路以及乘车可以挖矿，让用户的出行变得有意义！</div>
+
+			</div>
+
+			<div id="tabbar-with-contact" class="mui-control-content">
+				<div class="tx_content">
+					<div class="tx_logo_text">
+						<img class="logo2" src="img/logo.png" /> TFchain
+					</div>
+					<div class="tx_logo_text2">可用资产 </div>
+					<div class="tx_logo_text2"></div>
+				</div>
+				<div class="tx_content2">
+					<div class="tx_input_text">
+						转入数量
+					</div>
+					<input type="number" name="" id="" value="" />
+					<!--<div class="tx_input_text2">
+						手续费：100TFC
+					</div>
+					<div class="tx_input_text2">
+						实际到账：10000TFC
+					</div>
+					<div class="" style="clear: left;"></div>-->
+				</div>
+
+				<div class="tx_content2">
+					<div class="tx_input_text">
+						地址：
+					</div>
+					<input type="text" name="" id="" value="" />
+				</div>
+
+				<div class="tx_content2 ">
+					<div class="tx_input_text">
+						请输入验证码：
+					</div>
+					<input class="phone" type="tel" name="" id="" value="" />
+					<button class="yzm">获取验证码</button>
+				</div>
+				<button type="button" class="mui-btn mui-btn-primary">确认转入</button>
+			</div>
+			<div id="tabbar-with-chat" class="mui-control-content">
+				<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!--数据列表-->
+						<ul class="mui-table-view mui-table-view-chevron">
+
+						</ul>
+					</div>
+				</div>
+				<!--<div class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+				
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<div class="mui-table">
+									<div class="mui-table-cell mui-col-xs-10">
+										<div class=""></div>
+										<h5></h5>
+									</div>
+									<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+										<span class="mui-h5"></span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>-->
+			</div>
+		</div>
+		<div class="mask">正在转入。。。</div>
+	</body>
+	<script id="html_list" type="text/html">
+		<li class="mui-table-view-cell">
+			<div class="mui-table">
+				<div class="mui-table-cell mui-col-xs-8">
+					<div class="" style="overflow: hidden; text-overflow: ellipsis;">
+						<%=address %>
+					</div>
+					<h5><%=creat_time %></h5>
+				</div>
+				<div class="mui-table-cell mui-col-xs-4 mui-text-right">
+					<span class="mui-h5">-<%=num %>TF</span>
+				</div>
+			</div>
+		</li>
+	</script>
+	<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/arttmpl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/zepto_1.1.3.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var _v = "2.1.2",
+			down_up = "DOWN",
+			_uid = null,
+			_token = null,
+			_phone = null,
+			_gjm = null,
+			_time = 60,
+			_balance = 0,
+			_s = 1;
+		mui.ready(function() {
+			var h = document.documentElement.clientHeight;
+			//console.log(h)
+			document.getElementById("tabbar-with-chat").style.height = (h - 90) + "px";
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style: 'circle',
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			_uid = localStorage.getItem("UID");
+			_token = localStorage.getItem("TOKEN");
+			_phone = localStorage.getItem("PHONE");
+			_gjm = localStorage.getItem("GJCODE");
+
+			//			if("0x14b15e4fa629fd4cd3682095ce8cb00e849b494b".substring(0,2) == "0x"){
+			//				console.log("yes")
+			//			}
+
+			if(!_uid && !_token) {
+				location.href = "index.html";
+				return;
+			}
+
+			var obj = {
+				service: "Drowcoin.Get_list",
+				uid: _uid,
+				token: _token,
+				s: _s,
+				p: 8
+			}
+			getSign(obj, function(data) {
+				//console.log(data)
+				gettradingList(data)
+			})
+			var _obj4 = {
+				service: "User.U_balance_drow",
+				uid: _uid,
+				token: _token,
+				language: "cn",
+				v: _v
+			}
+			//获取总额
+			getSign(_obj4, function(data4) {
+				getBalance(data4)
+			})
+			mui(".mui-bar-tab").on("tap", ".mui-tab-item", function() {
+				//console.log(this.innerHTML)
+				document.querySelector("h1").innerHTML = this.innerHTML;
+			}) //		
+			//蒙版初始化 设置正在加载中高度
+			var mask = mui.createMask(function() {
+				console.log("关闭");
+				document.querySelector(".mask").style.display = "none";
+				clearInterval(1)
+			});
+			var _heigth = document.documentElement.clientHeight;
+			document.querySelector(".mask").style.top = _heigth / 2 + "px";
+
+			document.querySelectorAll("button")[1].onclick = function() {
+				console.log("提交")
+				var _num = document.querySelectorAll("input")[0].value;
+				var _address = document.querySelectorAll("input")[1].value;
+				var _yzm = document.querySelectorAll("input")[2].value;
+				if(!_num) {
+					mui.alert("请输入转入数量")
+					return;
+				}
+				if(!_address) {
+					mui.alert("请输入钱包地址")
+					return;
+				}
+				var _str1 = _address.substring(0, 2)
+				if(_str1 != "0x" && _address.length != 42) {
+					mui.alert("钱包地址为0x开头的42位字符")
+					return;
+				}
+				//console.log("0xasdadad".substring(0, 2))
+				if(_balance - _num < 0) {
+					mui.alert("转币数不能大于余额")
+					return;
+				}
+				if(!_yzm) {
+					mui.alert("请输入验证码")
+					return;
+				}
+
+				var obj = {
+					service: "Drowcoin.Drow",
+					uid: _uid,
+					token: _token,
+					phone: _phone,
+					code: _yzm,
+					num: _num,
+					address: _address
+				}
+
+				getSign(obj, function(data) {
+					if(confirm("确认提交？")) {
+						mask.show(); //显示遮罩
+						document.querySelector(".mask").style.display = "block";
+						setInterval(function() {
+							var len = document.querySelector(".mask").innerHTML.length;
+							if(len == 7) {
+								var len = document.querySelector(".mask").innerHTML = "正在转入。"
+							} else {
+								document.querySelector(".mask").innerHTML += "。"
+							}
+						}, 1000)
+						drow(data, mask)
+					}
+				})
+
+			}
+
+			document.querySelectorAll("button")[0].onclick = function() {
+				var obj = {
+					service: "User.Code_drow",
+					language: "cn",
+					v: _v,
+					phone: _phone,
+					country: _gjm
+				}
+				getSign(obj, function(data) {
+					getYZM(data);
+				})
+			}
+		})
+
+		function pulldownRefresh() {
+			console.log("下");
+			down_up = "DOWN";
+			_s = 1;
+			var obj = {
+				service: "Drowcoin.Get_list",
+				uid: _uid,
+				token: _token,
+				s: _s,
+				p: 8
+			}
+			getSign(obj, function(data) {
+				//console.log(data)
+				gettradingList(data)
+			})
+		}
+
+		function pullupRefresh() {
+			console.log("上")
+			down_up = "UP";
+			_s += 1;
+			var obj = {
+				service: "Drowcoin.Get_list",
+				uid: _uid,
+				token: _token,
+				s: _s,
+				p: 8
+			}
+			getSign(obj, function(data) {
+				//console.log(data)
+				gettradingList(data)
+			})
+		}
+
+		function getBalance(_data) {
+			var params = {};
+			params.url = "User.U_balance_drow"
+			params.data = _data;
+			jsAjax.ajax(params, function(data) {
+				console.log("总额")
+				console.log(data)
+				var code = data.code;
+				if(code == 0) {
+					_balance = data.info.balance;
+					document.querySelectorAll(".tx_logo_text2")[1].innerHTML = _balance + "<span>TF</span>"
+				} else {
+					mui.alert(data.msg)
+				}
+			}, function(XMLHttpRequest) {
+				if(XMLHttpRequest == "relogin") {
+					mui.alert("登陆过期，请重新登陆")
+					location.href = "index.html"
+				} else {
+					mui.alert("请求失败")
+				}
+
+			});
+		}
+
+		function drow(_data, mask) {
+			var params = {};
+			params.url = "Drowcoin.Drow"
+			params.data = _data;
+			params.xhrFields = {
+				withCredentials: true
+			}
+			params.crossDomain = true;
+			jsAjax.ajax(params, function(data) {
+				//console.log(data)
+				var code = data.code;
+				mask.close(); //关闭遮罩
+				document.querySelector(".mask").style.display = "none";
+				clearInterval(1);
+				if(code == 0) {
+					var _obj4 = {
+						service: "User.U_balance_drow",
+						uid: _uid,
+						token: _token,
+						language: "cn",
+						v: _v
+					}
+					//获取总额
+					getSign(_obj4, function(data4) {
+						getBalance(data4)
+					})
+
+					//					var _num1 = document.querySelectorAll(".tx_logo_text2")[1].innerHTML;
+					//					var _num2 = (parseFloat(_num1) - parseFloat(_data.num));
+					//					localStorage.setItem("BALANCE", _num2);
+					//					document.querySelectorAll(".tx_logo_text2")[1].innerHTML = _num2;
+
+					mui.alert("转入成功");
+					down_up = "DOWN";
+					_s = 1;
+					var obj = {
+						service: "Drowcoin.Get_list",
+						uid: _uid,
+						token: _token,
+						s: _s,
+						p: 8
+					}
+					getSign(obj, function(data) {
+						//console.log(data)
+						gettradingList(data)
+					})
+
+					document.querySelectorAll(".mui-tab-item")[1].classList.remove("mui-active");
+					document.querySelectorAll(".mui-control-content")[1].classList.remove("mui-active");
+
+					document.querySelectorAll(".mui-tab-item")[2].classList.add("mui-active");
+					document.querySelectorAll(".mui-control-content")[2].classList.add("mui-active");
+					document.querySelector("h1").innerHTML = "记录"
+				} else {
+					mui.alert(data.msg)
+				}
+
+			}, function(XMLHttpRequest) {
+				if(XMLHttpRequest == "relogin") {
+					alert("登陆过期，请重新登陆")
+					location.href = "index.html"
+				} else {
+					alert("请求失败")
+				}
+
+			});
+		}
+
+		function gettradingList(_data) {
+			var params = {};
+			params.url = "Drowcoin.Get_list";
+			params.data = _data;
+			jsAjax.ajax(params, function(data) {
+				console.log(data);
+				var code = data.code;
+				if(code == 0) {
+
+					var info = data.info;
+					if(info.length == 0) {
+						if(_data.s == 1) {
+							var obj = {
+								address: "无记录"
+							}
+							document.querySelector("ul").innerHTML = template("html_list", obj);
+							if(down_up == "DOWN") {
+								mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+								mui('#pullrefresh').pullRefresh().refresh(true);
+								document.querySelector("ul").innerHTML = template("html_list", obj);
+							}
+						} else {
+							_s--;
+							mui.toast("无更多记录")
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+						}
+					} else {
+
+						var html = '';
+
+						for(var i = 0; i < info.length; i++) {
+							//html += '<li class="list-group-item list-group-item-info"><div class="title">钱包地址:</div><div class="content">' + info[i].address + '</div>	<div class="clearfix"></div><div class="title">提交时间:</div><div class="content">' + info[i].creat_time + '</div>	<div class="clearfix"></div><div class="title">转币数量:</div><div class="content">' + info[i].num + '</div>	<div class="clearfix"></div><div class="title">转币状态:</div><div class="content">' + (info[i].is_drow == 0 ? "未完成" : "完成") + '</div>	<div class="clearfix"></div>	</li>'
+
+							//html += '<tr><td>' + info[i].address + '</td><td>' + info[i].creat_time + '</td><td>' + (info[i].is_drow == 0 ? "-" : info[i].drow_time) + '</td><td>' + info[i].num + '</td><td>' + (info[i].is_drow == 0 ? "未完成" : "完成") + '</td></tr>';
+							html += template("html_list", info[i])
+						}
+
+						if(down_up == "DOWN") {
+							mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+							mui('#pullrefresh').pullRefresh().refresh(true);
+							document.querySelector("ul").innerHTML = html;
+						} else if(down_up == "UP") {
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+							document.querySelector("ul").innerHTML += html;
+						}
+					}
+
+				} else {
+					alert(data.msg)
+				}
+			}, function(XMLHttpRequest, textStatus, errorThrown) {
+				if(XMLHttpRequest == "relogin") {
+					alert("登陆过期，请重新登陆")
+					location.href = "index.html"
+				} else {
+					alert("请求失败")
+				}
+			})
+		}
+
+		function getYZM(_data) {
+			var params = {};
+			params.url = "User.Code_drow";
+			params.xhrFields = {
+				withCredentials: true
+			}
+			params.crossDomain = true;
+			params.data = _data;
+			jsAjax.ajax(params, function(data) {
+				console.log(data)
+				var code = data.code;
+				if(code == 0) {
+					downtime();
+					alert("发送成功");
+				} else {
+					alert("发送失败！请重试");
+				}
+			}, function() {
+				alert("请求失败")
+			})
+		}
+
+		function downtime() {
+			_time--;
+			setTimeout(function() {
+				if(_time <= 0) {
+					_time = 60;
+					document.querySelectorAll("button")[0].disabled = "";
+					document.querySelectorAll("button")[0].innerHTML = "获取验证码";
+				} else {
+					document.querySelectorAll("button")[0].disabled = "disabled";
+					document.querySelectorAll("button")[0].innerHTML = _time + "s";
+					downtime();
+				}
+			}, 1000)
+		}
+
+		function getSign(_data, funsuccess, funerror) {
+			var _timestamp = Date.parse(new Date()).toString().slice(0, 10)
+			_data.timestamp = _timestamp;
+			//console.log(_data)
+			delete _data.sign;
+			$.ajax({
+				type: "POST",
+				url: "js/qian.php",
+				data: _data,
+				success: function(msg) {
+					//console.log(JSON.parse(msg).sign)						
+					_data.sign = JSON.parse(msg).sign;
+					if(funsuccess) funsuccess(_data)
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//alert(JSON.stringify(XMLHttpRequest))
+					console.log(JSON.stringify(XMLHttpRequest))
+					if(funerror) funerror(XMLHttpRequest)
+				}
+			});
+		}
+	</script>
+
+</html>

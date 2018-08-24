@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>登陆</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<style type="text/css">
+			.input-group {
+				margin: 10px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="input-group">
+						<span class="input-group-addon">国际码</span>
+						<input type="text" class="form-control" value="+86" />
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">手机号</span>
+						<input type="tel" class="form-control" value="" />
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">密&nbsp;&nbsp;&nbsp;码</span>
+						<input type="password" class="form-control" value="" />
+					</div>
+					<button type="button" class="btn btn-primary btn-lg btn-block">登陆</button>
+					<br />
+					<!--<a href="tf_resetphone.html">更换登陆手机号（限一次）</a>-->
+					<!--<button type="button" class="btn btn-primary btn-lg btn-block">更换登陆手机号（限一次）</button>-->
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var _v = "2.1.2";
+			$(document).ready(function() {
+				//				var obj = {a:1,b:2,c:3,d:4}
+				//				for(var x in obj){
+				//					console.log(x + obj[x])
+				//				}
+				var _requery = location.search.substr(1).split("&");
+				var _obj = {};
+				for(var i = 0; i < _requery.length; i++) {
+					var _arry = _requery[i].split("=");
+					var a = _arry[0],
+						b = _arry[1];
+					_obj[a] = b;
+				}
+				if(_obj.phone) {
+					document.querySelectorAll("input")[1].value = _obj.phone;
+				}
+
+				document.querySelector("button").onclick = function() {
+					var _country = document.querySelectorAll("input")[0].value;
+					var _username = document.querySelectorAll("input")[1].value;
+					var _password = document.querySelectorAll("input")[2].value;
+					if(!_country) {
+						alert("请输入国际码")
+						return;
+					}
+					if(!_username) {
+						alert("请输入手机号")
+						return;
+					}
+					if(!_password) {
+						alert("请输入密码")
+						return;
+					}
+					var obj = {
+						service: "User.Login_drow",
+						language: "cn",
+						v: _v,
+						phone: _username,
+						country: _country,
+						password: _password
+					}
+					//	login(obj);
+					//	return
+					getSign(obj, function(data) {
+						//console.log(convertData(data))
+						//var _url = "https://api.tfcoin.io/akcoin/?"+convertData(data);
+						//var _url = HOST + "Usertest.Login";
+
+						login(data);
+					})
+				}
+
+			})
+
+			function login(_data) {
+				var params = {};
+				params.url = "User.Login_drow";
+				params.data = _data;
+				jsAjax.ajax(params, function(data) {
+					console.log(data)
+					var code = data.code;
+					if(code == 0) {
+						var _token = data.info.token;
+						var _uid = data.info.uid;
+						var _balance = data.info.balance;
+						localStorage.setItem("UID", _uid);
+						localStorage.setItem("TOKEN", _token);
+						localStorage.setItem("BALANCE", _balance);	
+						localStorage.setItem("PHONE",_data.phone);
+						localStorage.setItem("GJCODE",_data.country);
+						location.href = "tf_index.html";
+					} else if(code == 2) {
+						alert(data.msg);
+						location.href = "tf_bdsj.html";
+					} else {
+						alert(data.msg)
+					}
+
+				}, function(XMLHttpRequest, textStatus, errorThrown) {
+
+					console.log(XMLHttpRequest)
+					console.log(textStatus)
+
+				})
+			}
+
+//			function login2(_url, _data) {
+//				var xmlhttp;
+//				if(window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+//					xmlhttp = new XMLHttpRequest();
+//				} else { // code for IE6, IE5
+//					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+//				}
+//				xmlhttp.onreadystatechange = function() {
+//					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+//						var ret = JSON.parse(xmlhttp.responseText)
+//						//console.log(ret.ret);
+//						if(ret.ret == 200) {
+//							var data = ret.data;
+//							var code = data.code;
+//							if(code == 0) {
+//								var _uid = data.info.uid;
+//								var _token = data.info.token;
+//								localStorage.setItem("UID", _uid);
+//								localStorage.setItem("TOKEN", _token)
+//								//location.href = "tf_transfer.html";
+//							} else {
+//
+//							}
+//						} else {
+//							alert(ret.msg)
+//						}
+//
+//					} else {
+//						//alert("连接失败")
+//					}
+//				}
+//				xmlhttp.open("POST", _url, true);
+//				xmlhttp.send(convertData(_data));
+//
+//			}
+
+			function getSign(_data, funsuccess, funerror) {
+				var _timestamp = Date.parse(new Date()).toString().slice(0, 10)
+				_data.timestamp = _timestamp;
+				delete _data.sign;
+				//console.log(_data)
+				$.ajax({
+					type: "POST",
+					url: "js/qian.php",
+					data: _data,
+					success: function(msg) {
+						//console.log(JSON.parse(msg).sign)						
+						_data.sign = JSON.parse(msg).sign;
+						if(funsuccess) funsuccess(_data)
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						//alert(JSON.stringify(XMLHttpRequest))
+						console.log(JSON.stringify(XMLHttpRequest))
+						if(funerror) funerror(XMLHttpRequest)
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta charset="UTF-8">
+
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<style type="text/css">
+			.input-group {
+				margin: 10px 0;
+			}
+			
+			.form-group {
+				margin: 10px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="请输入国际码" value="+86">
+					</div>
+					<div class="form-group">
+						<input type="tel" class="form-control" placeholder="请输入手机号">
+					</div>
+					<div class="input-group">
+						<input type="tel" class="form-control" placeholder="请输入验证码">
+						<span class="input-group-btn">
+                          <button class="btn btn-default" type="button">发送</button>
+                        </span>
+					</div>
+					<button type="button" class="btn btn-primary btn-lg btn-block">提交</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var _v = "2.1.2";
+			$(document).ready(function() {
+
+				document.querySelectorAll("button")[0].onclick = function() {
+					//获取验证码
+					var _gjm = document.querySelectorAll("input")[0].value;
+					var _phone = document.querySelectorAll("input")[1].value;
+
+					if(!_gjm) {
+						alert("请输入国际码")
+						return;
+					}
+					if(!_phone) {
+						alert("请输入手机号")
+						return;
+					}
+					//					var re = /^1[3|4|5|7|8]\d{9}$/ig;
+					//					if(!re.test(_phone)) {
+					//						alert("请输入正确的手机号")
+					//return;
+					//					}
+					var obj = {
+						service: "User.Code_drow",
+						language: "cn",
+						v: _v,
+						phone: _phone,
+						country: _gjm
+					}
+					getSign(obj, function(data) {
+						getYZM(data);
+					})
+				}
+				document.querySelectorAll("button")[1].onclick = function() {
+					//提交
+					var _gjm = document.querySelectorAll("input")[0].value;
+					var _phone = document.querySelectorAll("input")[1].value;
+					var _vercode = document.querySelectorAll("input")[2].value;
+
+					if(!_gjm) {
+						alert("请输入国际码")
+						return;
+					}
+					if(!_phone) {
+						alert("请输入手机号")
+						return;
+					}
+					if(!_vercode) {
+						alert("请输入验证码")
+						return;
+					}
+
+					var obj = {
+						service: "User.Verify_drow",
+						language: "cn",
+						v: _v,
+						phone: _phone,
+						country: _gjm,
+						code: _vercode
+					}
+					getSign(obj, function(data) {
+						verity(data);
+					})
+
+				}
+			})
+
+			function verity(_data) {
+				var params = {};
+				params.url = "User.Verify_drow"
+				params.data = _data;
+				params.xhrFields = {
+					withCredentials: true
+				}
+				params.crossDomain = true;
+				jsAjax.ajax(params, function(data) {
+					console.log(data)
+					var code = data.code;
+					if(code == 0) {
+						alert(data.msg);
+						location.href = "index.html?phone=" + _data.phone;
+					} else {
+						alert(data.msg)
+					}
+				}, function() {
+					alert("请求失败")
+				})
+
+			}
+
+			function getYZM(_data) {
+				var params = {};
+				params.url = "User.Code_drow";
+				params.xhrFields = {
+					withCredentials: true
+				}
+				params.crossDomain = true;
+				params.data = _data;
+				jsAjax.ajax(params, function(data) {
+					console.log(data)
+					var code = data.code;
+					if(code == 0) {
+						alert("发送成功")
+					} else {
+						alert("发送失败！请重试")
+					}
+				}, function() {
+					alert("请求失败")
+				})
+			}
+
+			function getSign(_data, funsuccess, funerror) {
+				var _timestamp = Date.parse(new Date()).toString().slice(0, 10)
+				_data.timestamp = _timestamp;
+				//console.log(_data)
+				$.ajax({
+					type: "POST",
+					url: "js/qian.php",
+					data: _data,
+					success: function(msg) {
+						//console.log(JSON.parse(msg).sign)						
+						_data.sign = JSON.parse(msg).sign;
+						if(funsuccess) funsuccess(_data)
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						//alert(JSON.stringify(XMLHttpRequest))
+						console.log(JSON.stringify(XMLHttpRequest))
+						if(funerror) funerror(XMLHttpRequest)
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>
