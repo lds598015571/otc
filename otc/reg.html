@@ -16,13 +16,13 @@
 			}
 			
 			.mui-input-group label {
-				width: 22%;
+				width: 35%;
 			}
 			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: 65%;
 			}
 			
 			.mui-checkbox input[type=checkbox],
@@ -37,6 +37,17 @@
 			.mui-btn {
 				padding: 10px;
 			}
+			
+			.yzm_btn {
+				width: 25%;
+				float: right;
+				border-radius: 0;
+				margin-right: 1%;
+				margin-top: 3px;
+				border: none;
+				color: #FFFFFF;
+				background-color: #CCCCCC;
+			}
 		</style>
 	</head>
 
@@ -49,36 +60,43 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手机号</label>
-					<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入账号" />
+					<input type="text" class="mui-input-clear mui-input" placeholder="请输入账号" />
 				</div>
 				<div class="mui-input-row">
 					<label>验证码</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" />
+					<button class="yzm_btn" type="button">获取验证码</button>
+					<input type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 39%;" />
+
 				</div>
 				<div class="mui-input-row">
 					<label>昵称</label>
-					<input id='uname' type="text" class="mui-input-clear mui-input" placeholder="请输入昵称" />
+					<input type="text" class="mui-input-clear mui-input" placeholder="请输入昵称" />
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
-					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码" />
+					<input type="password" class="mui-input-clear mui-input" placeholder="请输入密码" />
 				</div>
 				<div class="mui-input-row">
 					<label>确认密码</label>
-					<input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="请确认密码" />
+					<input type="password" class="mui-input-clear mui-input" placeholder="请确认密码" />
 				</div>
-				
+
 			</form>
 			<div class="mui-content-padded">
-				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+				<button class="mui-btn mui-btn-block mui-btn-primary">注册</button>
 			</div>
-
 		</div>
+		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 
 		<script>
-			(function($, doc) {
-			}(mui, document));
+			$(document).ready(function() {
+				document.querySelector(".yzm_btn").onclick =function(){
+					console.log("获取")
+				}
+
+			})
 		</script>
 	</body>
 

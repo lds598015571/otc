@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>我的广告</title>
+		<title>我的挂单</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -107,8 +107,8 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">我的广告</h1>
+			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的挂单</h1>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
@@ -158,7 +158,7 @@
 									<li class="mui-table-view-cell">
 										第1个选项卡子项-10
 									</li>
-									
+
 								</ul>
 							</div>
 						</div>
@@ -196,7 +196,7 @@
 									</li>
 									<li class="mui-table-view-cell">
 										第2个选项卡子项-10
-									</li>									
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -257,6 +257,11 @@
 						return fragment;
 					};
 				});
+				document.querySelector("header").querySelector("a").onclick = function() {
+					console.log(123)
+										window.history.go(-1); 
+				
+				}
 			})(mui);
 		</script>
 	</body>

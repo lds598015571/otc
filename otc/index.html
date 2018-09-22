@@ -267,7 +267,7 @@
 									<div class="mui-card-content-inner">
 										市场参考价：0.04CNY/TF
 									</div>
-									<div class="mui-card-content-inner">
+									<!--<div class="mui-card-content-inner">
 										溢价设置（市场参考价为0）：
 									</div>
 									<div class="mui-input-row mui-input-range">
@@ -280,10 +280,10 @@
 									</div>
 									<div class="mui-card-content-inner">
 										基于市场价的溢出比例，市场价是根据部分大型交易所实时价格得出的，确保您的报价趋于一个相对合理范围，比如当前价格为0.04，溢价比例为10%，那么价格为0.044。
-									</div>
+									</div>-->
 									<form class="mui-input-group">
 										<div class="mui-input-row">
-											<label>交易价格：</label>
+											<label>期望价格：</label>
 											<input type="text" placeholder="请输入交易价格" />
 										</div>
 										<div class="mui-input-row">
@@ -348,16 +348,16 @@
 								</li>
 								<li class="mui-table-view-cell">
 									<a class="mui-navigate-right" href="advertising.html">
-										我的广告
+										我的挂单
 									</a>
 								</li>
-								<li class="mui-table-view-cell">
+								<!--<li class="mui-table-view-cell">
 									<a class="mui-navigate-right" href=" ">
 										交易明细
 									</a>
-								</li>
+								</li>-->
 								<li class="mui-table-view-cell">
-									<a class="mui-navigate-right"  href="setting.html">
+									<a class="mui-navigate-right" href="setting.html">
 										交易设置
 									</a>
 								</li>
@@ -372,11 +372,12 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.pullToRefresh.js"></script>
 		<script src="js/mui.pullToRefresh.material.js"></script>
-
+		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init();
 			(function($) {
-
+		
 				//阻尼系数
 				var deceleration = mui.os.ios ? 0.003 : 0.0009;
 				$('.mui-scroll-wrapper').scroll({
@@ -385,13 +386,13 @@
 					deceleration: deceleration
 				});
 				$.ready(function() {
-					mui('.mui-slider').slider().stopped = true;//禁止页面左右滑动
+					mui('.mui-slider').slider().stopped = true; //禁止页面左右滑动
 					//循环初始化所有下拉刷新，上拉加载。
 					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
 						$(pullRefreshEl).pullToRefresh({
 							down: {
 								callback: function() {
-									console.log(11)
+									console.log("下")
 									var self = this;
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
@@ -402,7 +403,7 @@
 							},
 							up: {
 								callback: function() {
-									console.log(11)
+									console.log("上")
 									var self = this;
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
@@ -425,12 +426,13 @@
 						}
 						return fragment;
 					};
+					getOrder();
 				});
 
-				document.getElementById('field-range-input').addEventListener('input', function() {
-					document.getElementById('field-range').value = this.value;
-
-				});
+				//				document.getElementById('field-range-input').addEventListener('input', function() {
+				//					document.getElementById('field-range').value = this.value;
+				//
+				//				});//溢价
 				var rangeList = document.querySelectorAll('input[type="range"]');
 				for(var i = 0, len = rangeList.length; i < len; i++) {
 					rangeList[i].addEventListener('input', function() {
@@ -441,16 +443,44 @@
 						}
 
 					});
-				}				
-				mui("#item1mobile").on("tap",".list_btn",function(){
+				}
+				mui("#item1mobile").on("tap", ".list_btn", function() {
 					console.log("购买")
 					location.href = "buy.html"
 				});
-				mui("#item2mobile").on("tap",".list_btn",function(){
-					console.log("出售")					
-					location.href = "buy.html"
+				mui("#item2mobile").on("tap", ".list_btn", function() {
+					console.log("出售")
+					location.href = "sell.html"
 				});
 			})(mui);
+
+			function getOrder() {
+				console.log("获取挂单信息")
+				return;
+				var params = {};
+				params.url = "trade/pre/list"
+				params.data = _data;
+				jsAjax.ajax(params, function(data) {
+					console.log("总额")
+					console.log(data)
+					var code = data.code;
+					if(code == 0) {
+						_balance = data.info.balance;
+						document.querySelectorAll(".tx_logo_text2")[1].innerHTML = _balance + "<span>TF</span>"
+					} else {
+						mui.alert(data.msg)
+					}
+				}, function(XMLHttpRequest) {
+					if(XMLHttpRequest == "relogin") {
+						mui.alert("登陆过期，请重新登陆")
+						location.href = "index.html"
+					} else {
+						mui.alert("请求失败")
+					}
+
+				});
+
+			}
 		</script>
 	</body>
 
