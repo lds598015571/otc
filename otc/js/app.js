@@ -1,9 +1,9 @@
-var HOST = "https://api.tfcoin.io/akcoin/?service="
+var HOST = "http://localhost:8081/api/v1"
 
+// window.addEventListener('touchmove', function defaultf(){}, { passive: false })
 var jsAjax = new function() {
 	var me = this;
 	this.ajax = function(params, success_callback, error_callback) { //网络请求
-
 		if(!params) {
 			mui.toast("jsAjax params is null");
 			return;
@@ -15,12 +15,12 @@ var jsAjax = new function() {
 		params.data = params.data || {}; //默认data为{} 
 		params.dataType = params.dataType || "json"; //默认json格式
 		params.timeout = params.timeout || "10000"; //默认请求超时10秒
-		params.type = params.type || "POST"; //默认GET请求
+		params.type = params.type || "GET"; //默认GET请求
 		params.async = params.async || "true"; //默认true，异步请求
 		params.xhrFields = params.xhrFields || {
 			withCredentials: false
 		}; //请求头sessionid
-		params.crossDomain = params.crossDomain || "false"; //默认true，异步请求	
+		params.crossDomain = params.crossDomain || "true"; //默认true，异步请求
 		//params.data.timestamp =Date.parse(new Date()).toString().slice(0,10);
 	
 		$.ajax({
@@ -32,8 +32,8 @@ var jsAjax = new function() {
 			crossDomain: params.crossDomain,
 			success: function(data) { //成功返回结果
 				if(data) {
-					var ret = data.ret;
-					if(ret && (200 == parseInt(ret))) {
+					var ret = data;
+					if(ret && (200 == parseInt(ret.code))) {
 						var obj = data.data;
 						if(obj) {
 							if(success_callback) success_callback(obj);
@@ -56,7 +56,6 @@ var jsAjax = new function() {
 
 			}
 		});
-		//1222222222222222222222222
 
 	}
 	this.ajax2 = function(params, success_callback, error_callback) {
