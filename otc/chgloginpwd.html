@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>密码设置</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+</head>
+
+<style type="text/css">
+.mui-card, .huhu-form{
+	top: 50px;
+	margin-top: 50px;
+}
+</style>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">修改登录密码</h1>
+</header>
+
+<div class="huhu-form"><!--class="mui-card"-->
+	<form class="mui-input-group" id="ChgLoginpwdForm">
+		<div class="mui-input-row">
+			<label>原密码</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入原密码" id="OriginPwdIpt">
+		</div>
+		<div class="mui-input-row">
+			<label>新密码</label>
+			<input type="password" class="mui-input-password" placeholder="请输入新密码" id="NewPwdIpt">
+		</div>
+		<div class="mui-input-row">
+			<label>确认密码</label>
+			<input type="password" class="mui-input-password" placeholder="请输入新密码" id="NewPwd2Ipt">
+		</div>
+		<div class="mui-button-row">
+			<button type="button" class="mui-btn mui-btn-primary" onclick="changeLoginPwd()">确认</button>
+			<button type="reset" class="mui-btn mui-btn-danger" >重置</button>
+		</div>
+	</form>
+</div>
+
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init()
+	function changeLoginPwd(){
+        // todo 修改密码需要手机号验证码验证
+        var data = {};
+        data.newLoginPassword = $("#NewPwdIpt").val();
+        data.oldLoginPassword = $("#OriginPwdIpt").val();
+        var params = {
+            data: data,
+            url: "/member/chgpwd/login/16",  // todo
+            type: "post",
+        };
+        // todo validate data
+        jsAjax.ajax(params, function(data) {
+            console.log("##### 修改登录密码完成 ####")
+			mui.back();
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
+	}
+</script>
+</body>
+
+</html>

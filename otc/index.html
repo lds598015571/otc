@@ -153,7 +153,11 @@
 			text-align: center;
 		}
 
-		.user_info span {
+		/*.user_info span {*/
+			/*font-size: 70px;*/
+		/*}*/
+
+		.user-avatar{
 			font-size: 70px;
 		}
 
@@ -170,22 +174,22 @@
 
 <body>
 <header class="mui-bar mui-bar-nav mui-bar-transparent">
-	<h1 class="mui-title">购买</h1>
+	<h1 class="mui-title" id="IndexNavTitle">购买列表</h1>
 </header>
 <nav class="mui-bar mui-bar-tab">
-	<a class="mui-tab-item mui-active" onclick="changeTab('item1mobile')">
+	<a id="Tab1" class="mui-tab-item mui-active" onclick="changeTab('item1mobile')">
 		<span class="mui-icon mui-icon-undo"></span>
 		<span class="mui-tab-label">购买</span>
 	</a>
-	<a class="mui-tab-item" onclick="changeTab('item2mobile')">
+	<a id="Tab2" class="mui-tab-item" onclick="changeTab('item2mobile')">
 		<span class="mui-icon mui-icon-redo"></span>
 		<span class="mui-tab-label">出售</span>
 	</a>
-	<a class="mui-tab-item" onclick="changeTab('item3mobile')"> <!--href="#item3mobile"-->
+	<a id="Tab3" class="mui-tab-item" onclick="changeTab('item3mobile')"> <!--href="#item3mobile"-->
 		<span class="mui-icon mui-icon-paperplane"></span>
 		<span class="mui-tab-label">发布</span>
 	</a>
-	<a class="mui-tab-item" onclick="changeTab('item4mobile')" > <!--href="#item4mobile"-->
+	<a id="Tab4" class="mui-tab-item" onclick="changeTab('item4mobile')" > <!--href="#item4mobile"-->
 		<span class="mui-icon mui-icon-contact"></span>
 		<span class="mui-tab-label">我的</span>
 	</a>
@@ -251,6 +255,10 @@
 									<input type="text" placeholder="请输入最高价格" id="MaxPriceIpt"/>
 								</div>
 								<div class="mui-input-row">
+									<label>总量：</label>
+									<input type="text" placeholder="请输入总量" id="AllAmountIpt"/>
+								</div>
+								<div class="mui-input-row">
 									<label>最小量：</label>
 									<input type="text" placeholder="请输入最小量" id="MinAmountIpt"/>
 								</div>
@@ -258,6 +266,10 @@
 									<label>最大量：</label>
 									<input type="text" placeholder="请输入最大量" id="MaxAmountIpt"/>
 								</div>
+								<!--<div class="mui-input-row">
+									<label>期望支付方式：</label>
+									<input type="text" placeholder="请输入最大量" id="PayChannelIpt"/>
+								</div>-->
 								<div class="mui-input-row" style="margin: 10px 5px;">
 									<textarea id="MsgIpt" rows="1" placeholder="选填挂单留言" ></textarea>
 								</div>
@@ -270,19 +282,14 @@
 			<!--我的-->
 			<div id="item4mobile" class="mui-slider-item mui-control-content" style="overflow-y:auto;">
 				<div class="user_info">
-					<span class="mui-icon mui-icon-contact"></span>
+					<div class="mui-icon mui-icon-contact user-avatar" ></div>
+					<div class="user_text" id="UserName">****</div>
+					<div class="user_text" id="UserMobile">****</div>
 					<div class="user_text">
-						小灰灰2018
+						交易<span id="UserTradeCount">0</span>|好评<span id="UserUpcount">0</span>|信任<span id="UserScore">0</span>
 					</div>
 					<div class="user_text">
-						17786453089
-					</div>
-					<div class="user_text">
-						交易0|好评0|信任0
-					</div>
-
-					<div class="user_text">
-						总资产：5000TF 可用资产：4500TF 冻结资产：0
+						可用资产：<span id="UserBalance">0</span>TF 冻结资产：<span id="UserFreeze">0</span>TF
 					</div>
 				</div>
 				<div class="server">
@@ -310,21 +317,22 @@
 								我的挂单
 							</a>
 						</li>
-						<!--<li class="mui-table-view-cell">
-                            <a class="mui-navigate-right" href=" ">
-                                交易明细
-                            </a>
-                        </li>-->
+					</ul>
+					<br />
+					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="setting.html">
-								交易设置
+							<a class="mui-navigate-right" href="chgloginpwd.html">
+								修改登录密码
 							</a>
 						</li>
-
+						<li class="mui-table-view-cell">
+							<a class="mui-navigate-right" href="chgtradepwd.html">
+								修改交易密码
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -374,6 +382,58 @@
 	%>
 </script>
 
+<!--<script type="text/template" id="tpl-me">
+	<%
+	<div class="user_info">
+		<span class="mui-icon mui-icon-contact"></span>
+		<div class="user_text" id="UserName">
+			<%=item.nickName%>
+		</div>
+		<div class="user_text" id="UserMobile">
+			<%=item.mobile%>
+		</div>
+		<div class="user_text">
+			交易0|好评0|信任0
+		</div>
+		<div class="user_text">
+			可用资产：<%=item.balance%>TF 冻结资产：<%=item.freeze%>TF
+		</div>
+	</div>
+	<div class="server">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					充值
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					提币
+				</a>
+			</li>
+		</ul>
+		<br />
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" href="order.html">
+					订单管理
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" href="advertising.html">
+					我的挂单
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" href="setting.html">
+					交易设置
+				</a>
+			</li>
+		</ul>
+	</div>
+	%>
+</script>-->
+
 <script type="text/javascript">
     mui.init();
     var scrollPage = {
@@ -381,11 +441,16 @@
         sell: 1,
         buy: 1,
         tfbuyscroll: false,
-        tfsellscroll: false
+        tfsellscroll: false,
+        currentPage: "#item1mobile",
     };
-    var pageData = {};
 
     (function($) {
+
+        // todo 检查用户是否登录
+        if(!sessionStorage.getItem("login")){
+            location.href = "login.html";
+		}
 
         //阻尼系数
         var deceleration = mui.os.ios ? 0.003 : 0.0009;
@@ -464,7 +529,7 @@
         mui("#item2mobile").on("tap", ".list_btn", function(target) {
             console.log(event)
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
-            location.href = "buy.html?id=" + id;
+            location.href = "sell.html?id=" + id;
         });
     })(mui);
 
@@ -473,22 +538,64 @@
         if("item3mobile" == tab){
             coinPrice("tfchain", function(data){
                 $("#CoinPrice").text(data.tfcoin)
+            })
+            $("#IndexNavTitle").text("发布挂单");
+        }
+        if("item4mobile" == tab){
+            $("#IndexNavTitle").text("个人中心");
+            getUserInfo(function(info){
+                console.log(info)
+				$("#UserName").text(info.name);
+                $("#UserMobile").text(info.mobile);
+                $("#UserTradeCount").text(info.tradeCount);
+                $("#UserUpcount").text(info.upcount);
+                $("#UserScore").text(info.score);
+
+                if(info.accountInfo){
+                    $("#UserBalance").text(info.accountInfo.tfchain_balance);
+                    $("#UserFreeze").text(info.accountInfo.tfchain_freeze);
+				}
 			})
-		}
+        }
+        if("item2mobile" == tab){
+            $("#IndexNavTitle").text("出售列表");
+        }
+        if("item1mobile" == tab){
+            $("#IndexNavTitle").text("购买列表");
+        }
     }
+
+    function getUserInfo(callback){
+        var params = {
+            url: "/member/detail"
+		}
+        jsAjax.ajax(params, function(data) {
+            if(callback){
+                callback(data)
+            }
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
+	}
+
 
     function changePreOrderType(target, obj){
         if(target.value == "sell"){
             $(".input-buy-max").hide();
             $(".input-sell-min").show();
             return;
-		}
+        }
         if(target.value == "buy"){
             $(".input-sell-min").hide();
             $(".input-buy-max").show();
             return;
         }
-	}
+    }
 
     function fill(data, type, reload) {
         var doc = $("#tf-" + type);
@@ -529,7 +636,7 @@
                 mui.alert("登陆过期，请重新登陆")
                 location.href = "index.html"
             } else {
-                mui.alert("请求失败")
+                mui.alert(XMLHttpRequest.responseJSON.message)
             }
         });
     }
@@ -543,12 +650,15 @@
         data.minAmount = $("#MinAmountIpt").val();
         data.maxAmount = $("#MaxAmountIpt").val();
         data.message = $("#MsgIpt").val();
+        data.allAmount = $("#AllAmountIpt").val();
+        // data.payChannel = $("#PayChannelIpt").val();
+        data.memberId = 16;
+        data.coinType = "tfchain";
         var params = {
             data: data,
-			url: "/trade/pre",
+            url: "/trade/pre",
             type: "post",
-			memberId: 16,
-		};
+        };
         // todo validate data
         jsAjax.ajax(params, function(data) {
             console.log("##### 发布挂单")
@@ -557,16 +667,16 @@
                 mui.alert("登陆过期，请重新登陆")
                 location.href = "index.html"
             } else {
-                mui.alert("请求失败")
+                mui.alert(XMLHttpRequest.responseJSON.message)
             }
         });
 
-	}
+    }
 
     function coinPrice(type, callback){
         if(type == null || type == undefined) {
             mui.alert("请选择有效币种")
-			return;
+            return;
         }
         var params = {};
         params.url = "/coin/market/price?coinType=tfchain";
@@ -579,10 +689,10 @@
                 mui.alert("登陆过期，请重新登陆")
                 location.href = "index.html"
             } else {
-                mui.alert("请求失败")
+                mui.alert(XMLHttpRequest.responseJSON.message)
             }
         });
-	}
+    }
 </script>
 </body>
 

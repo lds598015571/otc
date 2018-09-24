@@ -1,5 +1,5 @@
-var HOST = "http://localhost:8081/api/v1"
-
+// var HOST = "http://localhost:8081/api/v1"
+var HOST = "http://huhusky.vipgz1.idcfengye.com/8081/api/v1"
 // window.addEventListener('touchmove', function defaultf(){}, { passive: false })
 var jsAjax = new function() {
 	var me = this;
@@ -17,18 +17,23 @@ var jsAjax = new function() {
 		params.timeout = params.timeout || "10000"; //默认请求超时10秒
 		params.type = params.type || "GET"; //默认GET请求
 		params.async = params.async || "true"; //默认true，异步请求
+        params.contentType = params.contentType || "application/json",
 		params.xhrFields = params.xhrFields || {
-			withCredentials: false
+			withCredentials: true
 		}; //请求头sessionid
 		params.crossDomain = params.crossDomain || "true"; //默认true，异步请求
 		//params.data.timestamp =Date.parse(new Date()).toString().slice(0,10);
-	
+		if(params.type == "POST" || params.type == "post"){
+            params.data = JSON.stringify(params.data);
+		}
+
 		$.ajax({
 			type: params.type,
 			url: HOST + params.url,
 			dataType: params.dataType,
 			data: params.data,
 			xhrFields: params.xhrFields,
+			contentType: params.contentType,
 			crossDomain: params.crossDomain,
 			success: function(data) { //成功返回结果
 				if(data) {
@@ -56,42 +61,6 @@ var jsAjax = new function() {
 
 			}
 		});
-
-	}
-	this.ajax2 = function(params, success_callback, error_callback) {
-		if(!params) {
-			console.log("jsAjax params is null");
-			return;
-		}
-		if(!params.url) {
-			console.log("jsAjax params.url is null");
-			return;
-		}
-
-		var ajaxData = {
-			type: params.type || "POST",
-			url: HOST + params.url || "",
-			async: params.async || "true",
-			data: params.data || null,
-			dataType: params.dataType || "json",
-			contentType: params.contentType || "application/x-www-form-urlencoded;"
-		}
-
-		var xhr = createxmlHttpRequest();
-		xhr.responseType = ajaxData.dataType;
-		xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);
-		xhr.setRequestHeader("Content-Type", ajaxData.contentType);
-		//console.log(convertData(ajaxData.data))
-		xhr.send(convertData(ajaxData.data));
-		xhr.onreadystatechange = function() {
-			if(xhr.readyState == 4) {
-				if(xhr.status == 200) {
-					success_callback(xhr.response.data)
-				} else {
-					error_callback()
-				}
-			}
-		}
 
 	}
 }
