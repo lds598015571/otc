@@ -102,23 +102,6 @@
 		.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
 			width: 40%;
 		}
-		h4 {
-			margin-right: 20px;
-		}
-
-		.list_btn {
-			margin: 10px 0;
-			right: 10px;
-		}
-
-		.jy_type {
-			text-align: center;
-			margin: auto;
-			padding: 5px 10px;
-			color: #FFFFFF;
-			background-color: green;
-			width: 30%;
-		}
 	</style>
 </head>
 
@@ -128,43 +111,73 @@
 	<h1 class="mui-title">订单管理</h1>
 </header>
 <div class="mui-content">
-	<div id="slider" class="mui-slider mui-fullscreen">
-		<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-			<div class="mui-scroll">
-				<a class="mui-control-item mui-active" href="#item1mobile">
-					进行中
-				</a>
-				<a class="mui-control-item" href="#item2mobile">
-					已完成
-				</a>
-
+	<div id="item3mobile" class="mui-slider-item mui-control-content " style="overflow-y:auto;">
+		<div class="mui-col-sm-12">
+			<div class="fb_text">
+				发布一则交易挂单是免费的，每笔完成的交易需要缴纳1%的费用，钱包中至少有50000TF，挂单才会显示。
 			</div>
-		</div>
-		<div class="mui-slider-group">
-			<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-				<div id="scroll1" class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul class="mui-table-view" id="tf-order-waiting"></ul>
+			<div class="fb_title">
+				选择挂单类型：
+			</div>
+			<div class="mui-card">
+				<form class="mui-input-group">
+					<div class="mui-input-row mui-radio">
+						<label>在线出售TF</label>
+						<input name="tradeType" value="sell" type="radio" checked onchange="changePreOrderType(this)"/>
 					</div>
+					<div class="mui-input-row mui-radio" >
+						<label>在线购买TF</label>
+						<input name="tradeType" value="buy" type="radio" onchange="changePreOrderType(this)"/>
+					</div>
+				</form>
+			</div>
+			<div class="mui-card">
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						市场参考价：<span id="CoinPrice"></span>
+					</div>
+					<form class="mui-input-group" id="PreTradeForm">
+						<div class="mui-input-row">
+							<label>期望价格：</label>
+							<input type="text" placeholder="请输入期望价格" id="IdeaPriceIpt"/>
+						</div>
+						<div class="mui-input-row input-sell-min">
+							<label>最低价格：</label>
+							<input type="text" placeholder="请输入最低价格" id="MinPriceIpt"/>
+						</div>
+						<div class="mui-input-row input-buy-max" style="display: none" >
+							<label>最高价格：</label>
+							<input type="text" placeholder="请输入最高价格" id="MaxPriceIpt"/>
+						</div>
+						<div class="mui-input-row">
+							<label>总量：</label>
+							<input type="text" placeholder="请输入总量" id="AllAmountIpt"/>
+						</div>
+						<div class="mui-input-row">
+							<label>最小量：</label>
+							<input type="text" placeholder="请输入最小量" id="MinAmountIpt"/>
+						</div>
+						<div class="mui-input-row">
+							<label>最大量：</label>
+							<input type="text" placeholder="请输入最大量" id="MaxAmountIpt"/>
+						</div>
+						<div class="mui-input-row">
+							<label>期望支付方式：</label>
+							<input type="text" placeholder="请输入最大量" id="PayChannelIpt"/>
+						</div>
+						<div class="mui-input-row" style="margin: 10px 5px;">
+							<textarea id="MsgIpt" rows="1" placeholder="选填挂单留言" ></textarea>
+						</div>
+						<button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="publishPretrade()">立即发布</button>
+					</form>
 				</div>
 			</div>
-			<div id="item2mobile" class="mui-slider-item mui-control-content">
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul class="mui-table-view" id="tf-order-finished"></ul>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>
 <script src="js/mui.min.js"></script>
 <script src="js/mui.pullToRefresh.js"></script>
 <script src="js/mui.pullToRefresh.material.js"></script>
-<script src="js/arttmpl.js"></script>
-<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 <!--<script type="text/template" id="tpl-order">
 	<%
 	<div class="mui-table">
@@ -186,7 +199,7 @@
 	<%
 	<div class="mui-table">
 		<div class="mui-table-cell mui-col-xs-10">
-			<h4 class="mui-ellipsis"><%=item.id%></h4>
+			<h4 class="mui-ellipsis">test</h4>
 			<span class="mui-badge mui-badge-success">test</span>
 			<div class="mui-clearfix"></div>
 			<h5>交易6|好评100%|信任3</h5>
@@ -194,7 +207,7 @@
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
 			<span class="mui-h5">6.62CNY</span>
-			<button class="list_btn" name="test" onclick="toDetail(<%=item.id%>)">详情</button>
+			<button class="list_btn" name="test">出售TF</button>
 		</div>
 	</div>
 	%>
@@ -203,10 +216,10 @@
     mui.init();
 
     var scrollPage = {
-        waiting: 1,
-        finished: 1
+        doing: 1,
+		finished: 1
 
-    };
+	};
 
     (function($) {
         //阻尼系数
@@ -225,16 +238,16 @@
                             console.log("刷新购买单数据")
                             var self = this;
                             setTimeout(function() {
-                                self.endPullDownToRefresh()
                                 var type;
                                 switch(index){
-                                    case 0: type = "waiting";break;
-                                    case 1: type = "finished";break;
-                                    default: return;
-                                }
-                                getOrder(type, 1, function(data){
+									case 1: type = "waiting";break;
+									case 2: type = "finished";break;
+									default: return;
+								}
+                                getOrder(type, scrollPage[type], function(data){
                                     fill(data, type, true)
-                                });
+                                })
+                                self.endPullDownToRefresh()
                             }, 1000);
                         }
                     },
@@ -243,24 +256,23 @@
                             console.log("加载更多购买单数据")
                             var self = this;
                             setTimeout(function() {
-                                self.endPullUpToRefresh();
                                 var type;
                                 switch(index){
-                                    case 0: type = "waiting";break;
-                                    case 1: type = "finished";break;
+                                    case 1: type = "waiting";break;
+                                    case 2: type = "finished";break;
                                     default: return;
                                 }
                                 getOrder(type, scrollPage[type] + 1, function(data){
-                                    fill(data, type)
+                                    fill(data, type, true)
                                 })
-
+                                self.endPullUpToRefresh();
                             }, 1000);
                         }
                     }
                 });
             });
-            getOrder("waiting", scrollPage.waiting, function(data){
-                fill(data, "waiting", true)
+            getOrder("waiting", scrollPage.doing, function(data){
+                fill(data, "doing", true)
             })
             getOrder("finished", scrollPage.finished, function(data){
                 fill(data, "finished", true)
@@ -268,16 +280,13 @@
         });
     })(mui);
 
-    function toDetail(id) {
-		location.href = "orderDetail.html?id=" + id;
-    }
-
     function fill(data, type, reload) {
         var doc = $("#tf-order-" + type);
         if(reload) {
             doc.empty();
         }
         doc.append(createOrderFragment(data.data, type));
+        scrollPage[type] = data.page
     }
 
     var createOrderFragment = function(preOrder,type){
@@ -301,9 +310,7 @@
         params.url = "/trade/order/list?size=10&status=" + status + "&page=" + page;
         jsAjax.ajax(params, function(data) {
             console.log(data)
-			if(data.data.length > 0) {
-                scrollPage[status] = data.page
-            }
+            scrollPage[type] = data.page
             if(callback){
                 callback(data)
             }

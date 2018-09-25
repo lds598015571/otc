@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>充值</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+</head>
+
+<style type="text/css">
+	.mui-card, .huhu-form{
+		top: 50px;
+		margin-top: 50px;
+	}
+	.userQRCodeImageDiv {
+		margin-top: 24px;
+		margin-bottom: 16px;
+	}
+
+	.userQRCodeCardNum{
+		margin-bottom: 12px;
+	}
+	.mui-collapse-content{
+		text-align: center;
+	}
+	.line-center{
+		text-align: center;
+		font-size: 16px;
+		color: #007aff;
+	}
+</style>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">充值</h1>
+</header>
+
+<div class="huhu-form"><!--class="mui-card"-->
+	<p class="line-center">请选择币种扫描二维码充值</p>
+	<form class="mui-input-group" >
+		<ul class="mui-table-view" id="CoinAddressUl"></ul>
+	</form>
+</div>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery.qrcode.min.js"></script>
+<script src="js/arttmpl.js"></script>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/template" id="tpl-coinaddress">
+	<%
+	<a class="mui-navigate-right" href="#">
+		<%=item.coinType%>
+	</a>
+	<div class="mui-collapse-content">
+		<div class="userQRCodeImageDiv" id="<%=item.coinType%>Img"></div>
+		<div class="userQRCodeCardNum" >
+			<%=item.coinAddress%>
+		</div>
+	</div>
+	%>
+</script>
+
+
+
+<script type="text/javascript">
+    mui.init();
+    (function($){
+        getCoinAddress(function(){
+
+        })
+    })(mui)
+    function getCoinAddress(){
+        /*var data = [
+            {coinType: "tfchain", coinAddress: "http://www.baidu.com"},
+            {coinType: "usdt", coinAddress: "http://www.baidu.com"},
+        ]*/
+        var params = {
+            url: "/member/coin/address" // 用戶不同币种的地址
+        };
+        jsAjax.ajax(params, function(data) {
+            fill(data);
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
+    }
+    function fill(data) {
+        var doc = $("#CoinAddressUl");
+        doc.empty();
+        doc.append(createCoinAddressShowFragment(data));
+        $.each(data, function(index, value){
+            createUserQRCodeImage(value.coinAddress, value.coinType+"Img");
+        });
+    }
+
+    function createCoinAddressShowFragment(data){
+        var fragment = document.createDocumentFragment();
+        var li;
+        $.each(data, function(index, value){
+            li = document.createElement('li');
+            li.className = 'mui-table-view-cell mui-collapse';
+            var str = template('tpl-coinaddress', {
+                item: value
+            })
+            li.innerHTML = str;
+            fragment.appendChild(li);
+        });
+        return fragment;
+    }
+
+    function createUserQRCodeImage(coinAddress, id) {
+        var screenW = document.documentElement.clientWidth;
+        $('#'+id).empty();
+        $('#'+id).qrcode({
+            render: "canvas",
+            height: screenW * 3 / 5,
+            width: screenW * 3 / 5,
+            correnctLevel: 0,
+            text: coinAddress
+        });
+    }
+</script>
+</body>
+
+</html>
