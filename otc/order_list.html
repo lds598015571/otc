@@ -102,22 +102,53 @@
 		.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
 			width: 40%;
 		}
-		h4 {
-			margin-right: 20px;
+		/*--------------------------------------*/
+
+		.cont_type,
+		.cont_tile,
+		.cont_time {
+			float: left;
+			margin-right: 5px;
 		}
 
-		.list_btn {
-			margin: 10px 0;
-			right: 10px;
+		.cont_type_sell {
+			color: #fff;
+			padding: 2px 5px;
+			border-radius: 5px;
+			background-color: red;
 		}
-
-		.jy_type {
-			text-align: center;
-			margin: auto;
-			padding: 5px 10px;
-			color: #FFFFFF;
+		.cont_type_buy {
+			color: #fff;
+			padding: 2px 5px;
+			border-radius: 5px;
 			background-color: green;
-			width: 30%;
+		}
+		.cont_tile {
+			font-size: 20px;
+		}
+
+		.cont_time {
+			color: #777777;
+		}
+
+		.list_content2 {
+			color: #777777;
+			margin-left: 10px;
+			margin-top: 10px;
+			float: left;
+		}
+
+		.list_content3 {
+			color: #777777;
+			float: right;
+			margin-left: 10px;
+			margin-top: 10px;
+			padding-left: 10px;
+			border-left: 1px solid #C8C7CC;
+		}
+		.list_content3 span{
+			font-size: 18px;
+			color: #000000;
 		}
 	</style>
 </head>
@@ -137,6 +168,7 @@
 				<a class="mui-control-item" href="#item2mobile">
 					已完成
 				</a>
+
 			</div>
 		</div>
 		<div class="mui-slider-group">
@@ -158,53 +190,60 @@
 		</div>
 	</div>
 </div>
+<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/arttmpl.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/mui.min.js"></script>
 <script src="js/mui.pullToRefresh.js"></script>
 <script src="js/mui.pullToRefresh.material.js"></script>
-<script src="js/arttmpl.js"></script>
-<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-<!--<script type="text/template" id="tpl-order">
-	<%
-	<div class="mui-table">
-		<div class="mui-table-cell mui-col-xs-10">
-			<h4 class="mui-ellipsis"><%=item.id%></h4>
-			<span class="mui-badge mui-badge-success"><%=item.payChannel%></span>
-			<div class="mui-clearfix"></div>
-			<h5>交易6|好评100%|信任3</h5>
-			<p class="mui-h6 mui-ellipsis">限额 3000-14000CNY</p>
-		</div>
-		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-			<span class="mui-h5">6.62CNY</span>
-			<button class="list_btn" name="<%=item.id%>">出售TF</button>
-		</div>
-	</div>
-	%>
-</script>-->
+
 <script type="text/template" id="tpl-order">
 	<%
-	<div class="mui-table">
-		<div class="mui-table-cell mui-col-xs-10">
-			<h4 class="mui-ellipsis"><%=item.id%></h4>
-			<span class="mui-badge mui-badge-success">test</span>
-			<div class="mui-clearfix"></div>
-			<h5>交易6|好评100%|信任3</h5>
-			<p class="mui-h6 mui-ellipsis">限额 3000-14000CNY</p>
+	<div class="mui-to-page" > <!--data-id="<%=item.id%>" data-status="<%=item.status%>" data-type="<%=item.tradeType%>"-->
+	<div class="list_content1"> <!-- onclick="detailTrade(<%=item.id%>, <%=item.status%>, <%=item.tradeType%>)-->
+		<div class="cont_type cont_type_<%=item.tradeType%>">
+			<%=item.tradeTypeDisplay%>
 		</div>
-		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-			<span class="mui-h5">6.62CNY</span>
-			<button class="list_btn" name="test" onclick="toDetail(<%=item.id%>)">详情</button>
+		<div class="cont_tile">
+			<%=item.coinType%>
 		</div>
+		<div class="cont_time">
+			<%=item.createTimeDisplay%>
+		</div>
+		<div class="jy_type" style="float: right;color: red;">
+			<%=item.statusDisplay%>
+		</div>
+	</div>
+	<div class="mui-clearfix"></div>
+	<div class="list_content2">
+		<div class="">
+			价格：<%=item.univalent%>
+		</div>
+		<div class="">
+			数量：<%=item.amount%>
+		</div>
+	</div>
+	<div class="list_content3">
+		<div class="">
+			<span id="money">
+				<%=item.money%>
+			</span>
+			CNY
+		</div>
+		<div class="">
+			总金额
+		</div>
+	</div>
 	</div>
 	%>
 </script>
+
 <script>
     mui.init();
 
     var scrollPage = {
         waiting: 1,
         finished: 1
-
     };
 
     (function($) {
@@ -252,7 +291,6 @@
                                 getOrder(type, scrollPage[type] + 1, function(data){
                                     fill(data, type)
                                 })
-
                             }, 1000);
                         }
                     }
@@ -264,12 +302,14 @@
             getOrder("finished", scrollPage.finished, function(data){
                 fill(data, "finished", true)
             })
+			//
+            mui(".mui-slider-group").on("tap", ".mui-table-view-cell", function() {
+                console.log(this)
+                detailTrade(this.dataTid, this.dataStatus, this.dataType);
+            });
+
         });
     })(mui);
-
-    function toDetail(id) {
-		location.href = "orderDetail.html?id=" + id;
-    }
 
     function fill(data, type, reload) {
         var doc = $("#tf-order-" + type);
@@ -285,6 +325,13 @@
         $.each(preOrder, function(index, value){
             li = document.createElement('li');
             li.className = 'mui-table-view-cell';
+            li.dataStatus=value.status;
+            li.dataType=value.tradeType;
+            li.dataTid=value.id;
+            /*li.addEventListener("onclick", function(){
+                detailTrade(value.id, value.status, value.tradeType)
+			});*/
+            parse(value)
             var str = template('tpl-order', {
                 item: value
             })
@@ -300,7 +347,7 @@
         params.url = "/trade/order/list?size=10&status=" + status + "&page=" + page;
         jsAjax.ajax(params, function(data) {
             console.log(data)
-			if(data.data.length > 0) {
+            if(data.data.length > 0) {
                 scrollPage[status] = data.page
             }
             if(callback){
@@ -315,6 +362,41 @@
             }
         });
     }
+
+    function parse(trade) {
+        if(trade.tradeType == "sell"){
+            trade.tradeTypeDisplay = "卖";
+        }
+        if(trade.tradeType == "buy"){
+            trade.tradeTypeDisplay = "买";
+        }
+        var date = new Date(trade.createTime);
+        trade.createTimeDisplay = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+        if(trade.status == "waiting"){
+            trade.statusDisplay = "进行中";
+		}
+		if(trade.status == "finished"){
+            trade.statusDisplay = "已完成";
+		}
+    }
+    function detailTrade(id, status, tradeType){
+        console.log(id, status, tradeType)
+		// todo 根据不同数据跳转不同页面
+		var page = "#";
+		if(status == "waiting" && tradeType == "sell"){
+            page = "orderDetail3.html";
+		}
+        if(status == "waiting" && tradeType == "buy"){
+            page = "orderDetail.html";
+        }
+        if(status == "finished" && tradeType == "buy"){
+            page = "orderDetail2.html";
+        }
+        if(status == "finished" && tradeType == "sell"){
+            page = "orderDetail4.html";
+        }
+        location.href = page + "?id=" + id;
+	}
 </script>
 </body>
 

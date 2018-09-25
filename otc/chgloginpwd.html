@@ -43,6 +43,8 @@
 </div>
 
 <script src="js/mui.min.js"></script>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     mui.init()
 	function changeLoginPwd(){
@@ -52,7 +54,7 @@
         data.oldLoginPassword = $("#OriginPwdIpt").val();
         var params = {
             data: data,
-            url: "/member/chgpwd/login/16",  // todo
+            url: "/member/change/pwd/login",  // todo
             type: "post",
         };
         // todo validate data

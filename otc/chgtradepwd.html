@@ -9,10 +9,10 @@
 </head>
 
 <style type="text/css">
-.mui-card, .huhu-form{
-	top: 50px;
-	margin-top: 50px;
-}
+	.mui-card, .huhu-form{
+		top: 50px;
+		margin-top: 50px;
+	}
 </style>
 
 <body>
@@ -43,6 +43,8 @@
 </div>
 
 <script src="js/mui.min.js"></script>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     mui.init();
     function changeTradePwd(){
@@ -52,12 +54,11 @@
         data.oldTradePassword = $("#OriginPwdIpt").val();
         var params = {
             data: data,
-            url: "/member/chgpwd/trade/16",  // todo
+            url: "/member/change/pwd/trade",  // todo
             type: "post",
         };
         // todo validate data
         jsAjax.ajax(params, function(data) {
-            console.log("##### 修改登录密码完成 ####")
             mui.back();
         }, function(XMLHttpRequest) {
             if(XMLHttpRequest == "relogin") {
