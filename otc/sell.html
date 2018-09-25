@@ -214,7 +214,7 @@
 			<div class="footer">
 				<div class="mui-row">
 					<div class="lxdf">
-						<span class="mui-icon mui-icon-chat"></span><span id="">联系对方</span>
+						<!--<span class="mui-icon mui-icon-chat"></span><span id="">联系对方</span>-->
 					</div>
 					<button class="buy_btn">出售</button>
 				</div>
@@ -226,9 +226,9 @@
 		<script type="text/javascript">
 			mui.init()
 			document.querySelector(".buy_btn").onclick = function() {				
-				var _html = '<div class="tj_left">购买价格</div><div class="tj_right">6.63 CNY</div>	<div class="mui-clearfix"></div>			<div class="tj_left">				购买金额			</div>			<div class="tj_right">				6.63 CNY			</div>			<div class="mui-clearfix"></div>			<div class="tj_left">				购买数量			</div>			<div class="tj_right">				6.63 CNY			</div>			<div class="mui-clearfix"></div>			<div class="tj_ts">				提醒：请确认价格再下单，下单后此交易的USDT将托管锁定，请放心购买。			</div>';		
+				var _html = '<div class="tj_left">出售价格</div><div class="tj_right">6.63 CNY</div>	<div class="mui-clearfix"></div><div class="tj_left">出售金额</div><div class="tj_right">6123.63332 CNY</div><div class="mui-clearfix"></div><div class="tj_left">出售数量</div><div class="tj_right">2213126.63213123 USDT</div><div class="mui-clearfix"></div><div class="tj_ts">提醒：请确认价格再下单，下单后此交易的USDT将托管锁定，请放心出售。</div>';		
 				var btnArray = ['取消', '确认'];
-				mui.confirm(_html, '下单确认', btnArray, function(e) {
+				mui.confirm(_html, '出售确认', btnArray, function(e) {
 					if(e.index == 1) {
 						console.log("确认")
 					}else{
