@@ -20,6 +20,9 @@
 
 	.userQRCodeCardNum{
 		margin-bottom: 12px;
+		text-align: center;
+		-ms-word-break: break-all;
+		word-break: break-all;
 	}
 	.mui-collapse-content{
 		text-align: center;
@@ -94,15 +97,22 @@
         var doc = $("#CoinAddressUl");
         doc.empty();
         doc.append(createCoinAddressShowFragment(data));
-        $.each(data, function(index, value){
+		for ( var key in data) {
+            createUserQRCodeImage(data[key], key+"Img");
+        }
+       /* $.each(data, function(index, value){
             createUserQRCodeImage(value.coinAddress, value.coinType+"Img");
-        });
+        });*/
     }
 
     function createCoinAddressShowFragment(data){
         var fragment = document.createDocumentFragment();
         var li;
-        $.each(data, function(index, value){
+        for ( var key in data) {
+            var value = {
+                coinType: key,
+				coinAddress: data[key]
+			}
             li = document.createElement('li');
             li.className = 'mui-table-view-cell mui-collapse';
             var str = template('tpl-coinaddress', {
@@ -110,7 +120,7 @@
             })
             li.innerHTML = str;
             fragment.appendChild(li);
-        });
+        };
         return fragment;
     }
 

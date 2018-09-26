@@ -1,6 +1,7 @@
-// var HOST = "http://localhost:8081/api/v1"
-var HOST = "http://huhusky.vipgz1.idcfengye.com/8081/api/v1"
+var HOST = "http://localhost:8081/api/v1"
+// var HOST = "http://huhusky.vipgz1.idcfengye.com/8081/api/v1"
 // window.addEventListener('touchmove', function defaultf(){}, { passive: false })
+
 var jsAjax = new function() {
 	var me = this;
 	this.ajax = function(params, success_callback, error_callback) { //网络请求
@@ -23,7 +24,7 @@ var jsAjax = new function() {
 		}; //请求头sessionid
 		params.crossDomain = params.crossDomain || "true"; //默认true，异步请求
 		//params.data.timestamp =Date.parse(new Date()).toString().slice(0,10);
-		if(params.type == "POST" || params.type == "post"){
+		if(params.type == "POST" || params.type == "post" || params.type == "put"|| params.type == "PUT"){
             params.data = JSON.stringify(params.data);
 		}
 
@@ -57,8 +58,30 @@ var jsAjax = new function() {
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				//异常处理
-				if(error_callback) error_callback(XMLHttpRequest, textStatus, errorThrown);
-
+				if(XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.message) {
+					var msg = XMLHttpRequest.responseJSON.message;
+					var codeMsg = msg.split(":");
+					if(codeMsg[0] == "4001"){
+						mui.confirm(codeMsg[1], "error", ["确定"], function(){
+                            location.href = "login.html";
+                        })
+                        /*if(confirm(codeMsg[1])){
+                            location.href = "login.html";
+                        }else{
+                            location.href = "login.html";
+                        }*/
+                        return;
+					}
+                }
+				if(error_callback){
+                    error_callback(XMLHttpRequest, textStatus, errorThrown);
+                    return;
+				}
+				if(XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.message){
+                    mui.alert(XMLHttpRequest.responseJSON.message)
+                }else{
+                    mui.alert("network is error!");
+				}
 			}
 		});
 

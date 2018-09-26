@@ -1,250 +1,254 @@
 <!doctype html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>购买</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<style type="text/css">
-			.mui-row {
-				background-color: #fff;
-			}
-			
-			.mui-input-group:before {
-				background-color: #FFFFFF;
-			}
-			
-			.mui-input-row label {
-				padding: 10px 1px;
-			}
-			
-			.user_img {
-				width: 40%;
-				margin: 15px;
-			}
-			
-			.user_num {
-				text-align: center;
-				margin-top: 25px;
-			}
-			
-			.user_info {
-				margin-top: 10px;
-			}
-			
-			.user_info2 {
-				text-align: center;
-			}
-			
-			.user_info2_text {
-				margin-top: 5px;
-			}
-			
-			.user_sm {
-				font-size: 14px;
-				margin: 10px;
-				padding-top: 10px;
-				border-top: 1px solid #F3F3F3;
-			}
-			
-			.buy_title {
-				font-size: 25px;
-				margin: 15px;
-			}
-			
-			.user_tx {
-				margin: 15px;
-			}
-			
-			.footer {
-				width: 100%;
-				/*padding: 5% 10px;*/
-				background-color: #FFF;
-				position: fixed;
-				bottom: 0;
-			}
-			
-			.footer span {
-				margin-right: 10px;
-			}
-			
-			.lxdf {
-				float: left;
-				margin: 15px 10px;
-			}
-			
-			.buy_btn {
-				float: right;
-				color: #FFFFFF;
-				background-color: #007AFF;
-				border: none;
-				border-radius: 0;
-				height: 60px;
-				width: 100px;
-			}
-			
-			.tj_left {
-				float: left;
-			}
-			
-			.tj_right {
-				float: right;
-			}
-			.tj_ts {
-				color: red;
-			}
-		</style>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<title>购买</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<style type="text/css">
+		.mui-row {
+			background-color: #fff;
+		}
 
-	<body>
-		<header class="mui-action-back mui-bar mui-bar-nav mui-bar-transparent">
-			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">购买</h1>
-		</header>
+		.mui-input-group:before {
+			background-color: #FFFFFF;
+		}
 
-		<div class="mui-content">
-			<div class="mui-row">
-				<div class="mui-col-xs-3" style="text-align: center;">
-					<img class="user_img" src="img/user-photo.png" />
-				</div>
-				<div class="mui-col-xs-6">
-					<div class="user_info">
-						evacola
-					</div>
-					<div class="user_info">
-						交易限额
-					</div>
-				</div>
-				<div class="mui-col-xs-3">
-					<div class="user_num">
-						6.63CNY
-					</div>
-				</div>
-			</div>
-			<div class="mui-row user_info2">
-				<div class="mui-col-xs-3">
-					<div class="user_info2_text">
-						500+
-					</div>
-					<div class="user_info2_text">
-						交易次数
-					</div>
-				</div>
-				<div class="mui-col-xs-3">
-					<div class="user_info2_text">
-						6.63CNY
-					</div>
-					<div class="user_info2_text">
-						信任人数
-					</div>
-				</div>
-				<div class="mui-col-xs-3">
-					<div class="user_info2_text">
-						6.63CNY
-					</div>
-					<div class="user_info2_text">
-						好评
-					</div>
-				</div>
-				<div class="mui-col-xs-3">
-					<div class="user_info2_text">
-						6.63CNY
-					</div>
-					<div class="user_info2_text">
-						历史成交
-					</div>
-				</div>
-			</div>
-			<div class="mui-row">
-				<div class="mui-col-xs-12">
-					<div class="user_sm">
-						广告留言：支付宝、银行卡交易、诚信交易、不需要备注，实在控制不住，就备注数字，千万不要出现虚拟币相关的数字字母。
-					</div>
-				</div>
-			</div>
-			<div class="mui-row" style="margin-top: 10px;padding-bottom: 20px;">
-				<div class="mui-col-xs-12">
-					<div class="buy_title">
-						你想购买多少？
-					</div>
-				</div>
-				<div class="mui-col-xs-5">
-					<div class="mui-input-group">
-						<div class="mui-input-row" style="margin-left:10px ;">
-							<label>CNY：</label>
-							<input type="text" class="mui-input-clear" placeholder="2000-30000" style="padding-right: 0;" />
-						</div>
-					</div>
-				</div>
-				<div class="mui-col-xs-2">
-					<div class="" style="text-align: center;margin-top: 5px;">
-						←
-					</div>
-					<div class="" style="text-align: center;margin-top: -15px;">
-						→
-					</div>
-				</div>
-				<div class="mui-col-xs-5">
-					<div class="mui-input-group">
-						<div class="mui-input-row">
-							<label>USDT：</label>
-							<input type="text" class="mui-input-clear" placeholder="购买数量" style="padding-right: 0;" />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="mui-row" style="margin-top: 10px;margin-bottom: 20%;">
-				<div class="mui-col-xs-12">
-					<div class="user_tx">
-						<div class="">
-							交易提醒：
-						</div>
-						<div class="">
-							1、交易前请详细了解卖家的交易信息。
-						</div>
-						<div class="">
-							2、请通过平台进行沟通约定，并保存好相关聊天记录。
-						</div>
-						<div class="">
-							3、如遇到交易纠纷，请通过平台"帮助"解决问题。
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="footer">
-				<div class="mui-row">
-					<div class="lxdf">
-						<!--<span class="mui-icon mui-icon-chat"></span><span id="">联系对方</span>-->
-					</div>
-					<button class="buy_btn">购买</button>
-				</div>
+		.mui-input-row label {
+			padding: 10px 1px;
+		}
 
+		.user_img {
+			width: 40%;
+			margin: 15px;
+		}
+
+		.user_num {
+			text-align: center;
+			margin-top: 25px;
+		}
+
+		.user_info {
+			margin-top: 10px;
+		}
+
+		.user_info2 {
+			text-align: center;
+		}
+
+		.user_info2_text {
+			margin-top: 5px;
+		}
+
+		.user_sm {
+			font-size: 14px;
+			margin: 10px;
+			padding-top: 10px;
+			border-top: 1px solid #F3F3F3;
+		}
+
+		.buy_title {
+			font-size: 25px;
+			margin: 15px;
+		}
+
+		.user_tx {
+			margin: 15px;
+		}
+
+		.footer {
+			width: 100%;
+			/*padding: 5% 10px;*/
+			background-color: #FFF;
+			position: fixed;
+			bottom: 0;
+		}
+
+		.footer span {
+			margin-right: 10px;
+		}
+
+		.lxdf {
+			float: left;
+			margin: 15px 10px;
+		}
+
+		.buy_btn {
+			float: right;
+			color: #FFFFFF;
+			background-color: #007AFF;
+			border: none;
+			border-radius: 0;
+			height: 60px;
+			width: 100px;
+		}
+
+		.tj_left {
+			float: left;
+		}
+
+		.tj_right {
+			float: right;
+		}
+		.tj_ts {
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+<header class="mui-action-back mui-bar mui-bar-nav mui-bar-transparent">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">购买</h1>
+</header>
+
+<div class="mui-content">
+	<div class="mui-row">
+		<div class="mui-col-xs-3" style="text-align: center;">
+			<img class="user_img" src="img/user-photo.png" />
+		</div>
+		<div class="mui-col-xs-6">
+			<div class="user_info">
+				evacola
+			</div>
+			<div class="user_info">
+				单价
 			</div>
 		</div>
-		
-		<script src="js/mui.min.js"></script>
-		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			mui.init()
+		<div class="mui-col-xs-3">
+			<div class="user_num">
+				<span id="GdIdeaUnivalent"></span>
+			</div>
+		</div>
+	</div>
+	<div class="mui-row user_info2">
+		<div class="mui-col-xs-3">
+			<div class="user_info2_text">
+				<span id="GdTradeAmount"></span>
+			</div>
+			<div class="user_info2_text">
+				交易次数
+			</div>
+		</div>
+		<div class="mui-col-xs-3">
+			<div class="user_info2_text">
+				<span id="GdUpcount"></span>
+			</div>
+			<div class="user_info2_text">
+				信任人数
+			</div>
+		</div>
+		<div class="mui-col-xs-3">
+			<div class="user_info2_text">
+				<span id="GdScore"></span>
+			</div>
+			<div class="user_info2_text">
+				好评
+			</div>
+		</div>
+		<div class="mui-col-xs-3">
+			<div class="user_info2_text">
+				<span id="GdFinishedCount"></span>
+			</div>
+			<div class="user_info2_text">
+				历史成交
+			</div>
+		</div>
+	</div>
+	<div class="mui-row">
+		<div class="mui-col-xs-12">
+			<div class="user_sm">
+				挂单留言：<span id="GdMsg"></span>
+			</div>
+		</div>
+	</div>
+	<div class="mui-row" style="margin-top: 10px;padding-bottom: 20px;">
+		<div class="mui-col-xs-12">
+			<div class="buy_title">
+				你想购买多少？
+			</div>
+		</div>
+		<div class="mui-col-xs-5">
+			<div class="mui-input-group">
+				<div class="mui-input-row" style="margin-left:10px ;">
+					<label>CNY：</label>
+					<input type="text" id="GdMoney" class="mui-input-clear" readonly style="padding-right: 0;" />
+				</div>
+			</div>
+		</div>
+		<div class="mui-col-xs-2">
+			<div class="" style="text-align: center;margin-top: 5px;">
+				←
+			</div>
+			<div class="" style="text-align: center;margin-top: -15px;">
+				→
+			</div>
+		</div>
+		<div class="mui-col-xs-5">
+			<div class="mui-input-group">
+				<div class="mui-input-row">
+					<label>TF：</label>
+					<input type="number" id="GdAmount" oninput="fitMoneyIpt(this)" class="mui-input-clear" placeholder="购买数量" style="padding-right: 0;" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mui-row" style="margin-top: 10px;margin-bottom: 20%;">
+		<div class="mui-col-xs-12">
+			<div class="user_tx">
+				<div class="">
+					交易提醒：
+				</div>
+				<div class="">
+					1、交易前请详细了解卖家的交易信息。
+				</div>
+				<div class="">
+					2、请通过平台进行沟通约定，并保存好相关聊天记录。
+				</div>
+				<div class="">
+					3、如遇到交易纠纷，请通过平台"帮助"解决问题。
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="mui-row">
+			<div class="lxdf">
+				<!--<span class="mui-icon mui-icon-chat"></span><span id="">联系对方</span>-->
+			</div>
+			<button class="buy_btn">购买</button>
+		</div>
 
-			document.querySelector("header").querySelector("a").onclick = function() {
-				history.back(-1)
-			}
+	</div>
+</div>
 
-			document.querySelector(".buy_btn").onclick = function() {				
-				var _html = '<div class="tj_left">购买价格</div><div class="tj_right">6.63 CNY</div>	<div class="mui-clearfix"></div>			<div class="tj_left">				购买金额			</div>			<div class="tj_right">				6123.63332 CNY			</div>			<div class="mui-clearfix"></div>			<div class="tj_left">				购买数量			</div>			<div class="tj_right">				2213126.63213123 USDT			</div>			<div class="mui-clearfix"></div>			<div class="tj_ts">				提醒：请确认价格再下单，下单后此交易的USDT将托管锁定，请放心购买。			</div>';		
-				var btnArray = ['取消', '确认'];
-				mui.confirm(_html, '下单确认', btnArray, function(e) {
-					if(e.index == 1) {
-						console.log("确认")
-					}else{
-						console.log("取消")
-					}
-				})
-			}
-		</script>
-	</body>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    mui.init()
+
+    document.querySelector("header").querySelector("a").onclick = function() {
+        history.back(-1)
+    }
+
+    document.querySelector(".buy_btn").onclick = function() {
+        var _html = '<div class="tj_left">购买价格</div><div class="tj_right">6.63 CNY</div>	<div class="mui-clearfix"></div>			<div class="tj_left">				购买金额			</div>			<div class="tj_right">				6123.63332 CNY			</div>			<div class="mui-clearfix"></div>			<div class="tj_left">				购买数量			</div>			<div class="tj_right">				2213126.63213123 USDT			</div>			<div class="mui-clearfix"></div>			<div class="tj_ts">				提醒：请确认价格再下单，下单后此交易的USDT将托管锁定，请放心购买。			</div>';
+        var btnArray = ['取消', '确认'];
+        mui.confirm(_html, '下单确认', btnArray, function(e) {
+            if(e.index == 1) {
+                console.log("确认")
+            }else{
+                console.log("取消")
+            }
+        })
+    }
+    function fitMoneyIpt(ele){
+        console.log(ele.value);
+        $("#GdMoney").val(ele.value);
+	}
+</script>
+</body>
 
 </html>
