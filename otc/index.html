@@ -295,12 +295,12 @@
 				<div class="server">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right">
+							<a class="mui-navigate-right" href="charge.html">
 								充值
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right">
+							<a class="mui-navigate-right" href="withdraw.html">
 								提币
 							</a>
 						</li>
@@ -308,7 +308,7 @@
 					<br />
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="order.html">
+							<a class="mui-navigate-right" href="order_list.html">
 								订单管理
 							</a>
 						</li>
@@ -450,7 +450,7 @@
         // todo 检查用户是否登录
         if(!sessionStorage.getItem("login")){
             location.href = "login.html";
-		}
+        }
 
         //阻尼系数
         var deceleration = mui.os.ios ? 0.003 : 0.0009;
