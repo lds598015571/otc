@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>密码设置</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+</head>
+
+<style type="text/css">
+.mui-card, .huhu-form{
+	top: 50px;
+	margin-top: 50px;
+}
+</style>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">修改用户信息</h1>
+</header>
+
+<div class="huhu-form"><!--class="mui-card"-->
+	<form class="mui-input-group" id="ChgLoginpwdForm">
+		<div class="mui-input-row">
+			<label>昵称</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入昵称" id="NameIpt">
+		</div>
+		<div class="mui-input-row">
+			<label>真实姓名</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入昵称" id="RealNameIpt">
+		</div>
+		<div class="mui-input-row">
+			<label>支付宝账号</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入支付宝账号" id="AlipayIpt">
+		</div>
+		<div class="mui-button-row">
+			<button type="button" class="mui-btn mui-btn-primary" onclick="changeInfo()">确认</button>
+			<button type="reset" class="mui-btn mui-btn-danger" >重置</button>
+		</div>
+	</form>
+</div>
+
+<script src="js/mui.min.js"></script>
+<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    mui.init()
+	function changeInfo(){
+        // todo 修改密码需要手机号验证码验证
+        var data = {};
+        data.name = $("#NameIpt").val();
+        data.alipay = $("#AlipayIpt").val();
+        data.realName = $("#RealNameIpt").val();
+        var params = {
+            data: data,
+            url: "/member/change/info",  // todo
+            type: "post",
+        };
+        // todo validate data
+        jsAjax.ajax(params, function(data) {
+            console.log("##### 修改用户信息完成 ####")
+			mui.back();
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
+	}
+</script>
+</body>
+
+</html>

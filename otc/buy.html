@@ -94,6 +94,9 @@
 		.tj_ts {
 			color: red;
 		}
+		.text-small{
+			font-size: 8px;
+		}
 	</style>
 </head>
 
@@ -109,42 +112,51 @@
 			<img class="user_img" src="img/user-photo.png" />
 		</div>
 		<div class="mui-col-xs-6">
+			<div class="user_info" id="GdUserNameArea"></div>
 			<div class="user_info">
-				evacola
-			</div>
-			<div class="user_info">
-				单价
+				<span class="text-small">总量/剩余</span> <span id="GdAllAmount"></span>/<span id="GdRestAmount"></span>
 			</div>
 		</div>
-		<div class="mui-col-xs-3">
+		<!--<div class="mui-col-xs-3">
 			<div class="user_num">
-				<span id="GdIdeaUnivalent"></span>
+				<span id="GdIdeaUnivalent"></span>CNY
+			</div>
+			<div class="user_num">
+				单价
+			</div>
+		</div>-->
+		<div class="mui-col-xs-3">
+			<div class="user_info">
+				<span id="GdIdeaUnivalent"></span> <span class="text-small">CNY</span>
+			</div>
+			<div class="user_info">
+				<span class="text-small">单价</span>
 			</div>
 		</div>
 	</div>
 	<div class="mui-row user_info2">
 		<div class="mui-col-xs-3">
 			<div class="user_info2_text">
-				<span id="GdTradeAmount"></span>
+				<span id="GdMinAmount">**</span>
+			</div>
+			<div class="user_info2_text">
+				最小限额
+			</div>
+		</div>
+		<div class="mui-col-xs-3">
+			<div class="user_info2_text">
+				<span id="GdMaxAmount">**</span>
+			</div>
+			<div class="user_info2_text">
+				最大限额
+			</div>
+		</div>
+		<div class="mui-col-xs-3">
+			<div class="user_info2_text">
+				<span id="GdTradeCount"></span>
 			</div>
 			<div class="user_info2_text">
 				交易次数
-			</div>
-		</div>
-		<div class="mui-col-xs-3">
-			<div class="user_info2_text">
-				<span id="GdUpcount"></span>
-			</div>
-			<div class="user_info2_text">
-				信任人数
-			</div>
-		</div>
-		<div class="mui-col-xs-3">
-			<div class="user_info2_text">
-				<span id="GdScore"></span>
-			</div>
-			<div class="user_info2_text">
-				好评
 			</div>
 		</div>
 		<div class="mui-col-xs-3">
@@ -226,14 +238,39 @@
 <script src="js/mui.min.js"></script>
 <script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/arttmpl.js"></script>
+<script type="text/template" id="tips">
+	<%
+	<div class="tj_left">购买价格</div><div class="tj_right"><%=item.univalent%>CNY</div><div class="mui-clearfix"></div><div class="tj_left">购买金额</div><div class="tj_right"><%=item.money%> CNY</div><div class="mui-clearfix"></div><div class="tj_left">购买数量</div><div class="tj_right"><%=item.amount%> TF</div><div class="mui-clearfix"></div>
+	<div class="tj_ts">提醒：请确认价格再下单，下单后此交易的USDT将托管锁定，请放心购买。</div>
+	%>
+</script>
+
 <script type="text/javascript">
     mui.init()
+
+    var info = {};
 
     document.querySelector("header").querySelector("a").onclick = function() {
         history.back(-1)
     }
 
-    document.querySelector(".buy_btn").onclick = function() {
+    jsAjax.getPreTrade(jsAjax.getQueryString("id"),function(data){
+        console.log(data);
+        info = data;
+        $("#GdUserNameArea").text(data.name)
+        $("#GdIdeaUnivalent").text(data.preTrade.ideaUnivalent);
+        $("#GdTradeCount").text(data.tradeCount);
+        $("#UnivalentArea").text(data.univalent);
+        $("#GdFinishedCount").text(data.finishCount);
+        $("#GdMsg").text(data.preTrade.message);
+        $("#GdMinAmount").text(data.preTrade.minAmount);
+        $("#GdMaxAmount").text(data.preTrade.maxAmount);
+        $("#GdAllAmount").text(data.preTrade.allAmount);
+        $("#GdRestAmount").text(data.preTrade.restAmount);
+    });
+
+    /*document.querySelector(".buy_btn").onclick = function() {
         var _html = '<div class="tj_left">购买价格</div><div class="tj_right">6.63 CNY</div>	<div class="mui-clearfix"></div>			<div class="tj_left">				购买金额			</div>			<div class="tj_right">				6123.63332 CNY			</div>			<div class="mui-clearfix"></div>			<div class="tj_left">				购买数量			</div>			<div class="tj_right">				2213126.63213123 USDT			</div>			<div class="mui-clearfix"></div>			<div class="tj_ts">				提醒：请确认价格再下单，下单后此交易的USDT将托管锁定，请放心购买。			</div>';
         var btnArray = ['取消', '确认'];
         mui.confirm(_html, '下单确认', btnArray, function(e) {
@@ -243,11 +280,54 @@
                 console.log("取消")
             }
         })
+    }*/
+    document.querySelector(".buy_btn").onclick = function() {
+        var data = {
+            univalent: info.preTrade.ideaUnivalent,
+            amount: $("#GdAmount").val(),
+            money: $("#GdMoney").val()
+        };
+        var _html = template('tips',{
+            item: data
+        });
+        var btnArray = ['取消', '确认'];
+        mui.confirm(_html, '下单确认', btnArray, function(e) {
+            if(e.index == 0) {
+                return;
+            }
+            // 提交购买单：
+            submitTrade();
+        })
     }
     function fitMoneyIpt(ele){
         console.log(ele.value);
-        $("#GdMoney").val(ele.value);
+        $("#GdMoney").val(ele.value * info.preTrade.ideaUnivalent);
+    }
+
+    function submitTrade(){
+        var data = {
+			preId: info.preTrade.id,
+			amount: $("#GdAmount").val()
+		};
+        var params = {
+            data: data,
+			url: "/trade/order/submit",
+			type: "post"
+		};
+        jsAjax.ajax(params, function(data) {
+            mui.alert("购买成功")
+			mui.back();
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
 	}
+
+
 </script>
 </body>
 

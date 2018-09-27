@@ -330,6 +330,11 @@
 								修改交易密码
 							</a>
 						</li>
+						<li class="mui-table-view-cell">
+							<a class="mui-navigate-right" href="chginfo.html">
+								修改用户信息
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -346,19 +351,20 @@
 <!--<li class="mui-table-view-cell" >-->
 <!--</li>-->
 <!--<% } %>-->
+<!--<%=item.payChannel%>-->
 <script type="text/template" id="tpl-buy">
 	<%
 	<div class="mui-table">
 		<div class="mui-table-cell mui-col-xs-10">
 			<h4 class="mui-ellipsis"><%=item.id%></h4>
-			<span class="mui-badge mui-badge-success"><%=item.payChannel%></span>
+			<span class="mui-badge mui-badge-success">支付宝</span>
 			<div class="mui-clearfix"></div>
-			<h5>交易6|好评100%|信任3</h5>
-			<p class="mui-h6 mui-ellipsis">限额 3000-14000CNY</p>
+			<h5>好评**|信任**</h5>
+			<p class="mui-h6 mui-ellipsis">限额 <%=item.minAmount%> - <%=item.maxAmount%></p>
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-			<span class="mui-h5">6.62CNY</span>
-			<button class="list_btn" name="<%=item.id%>">购买TF</button>
+			<span class="mui-h5"><%=item.ideaUnivalent%></span>
+			<button class="list_btn" name="<%=item.id%>">出售TF</button>
 		</div>
 	</div>
 	%>
@@ -369,14 +375,14 @@
 	<div class="mui-table">
 		<div class="mui-table-cell mui-col-xs-10">
 			<h4 class="mui-ellipsis"><%=item.id%></h4>
-			<span class="mui-badge mui-badge-success"><%=item.payChannel%></span>
+			<span class="mui-badge mui-badge-success">支付宝</span>
 			<div class="mui-clearfix"></div>
-			<h5>交易6|好评100%|信任3</h5>
-			<p class="mui-h6 mui-ellipsis">限额 3000-14000CNY</p>
+			<h5>好评**|信任**</h5>
+			<p class="mui-h6 mui-ellipsis">限额 <%=item.minAmount%> - <%=item.maxAmount%></p>
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-			<span class="mui-h5">6.62CNY</span>
-			<button class="list_btn" name="<%=item.id%>">出售TF</button>
+			<span class="mui-h5"><%=item.ideaUnivalent%></span>
+			<button class="list_btn" name="<%=item.id%>">购买TF</button>
 		</div>
 	</div>
 	%>
@@ -438,8 +444,8 @@
     mui.init();
     var scrollPage = {
         // 存放上拉的次数，查询数据时需要分页
-        sell: 1,
-        buy: 1,
+        sell: 0,
+        buy: 0,
         tfbuyscroll: false,
         tfsellscroll: false,
         currentPage: "#item1mobile",
@@ -513,10 +519,10 @@
                     }
                 }
             })
-            getPreTrade("buy", scrollPage.buy, function(data){
+            getPreTrade("buy", 1, function(data){
                 fill(data, "buy", true)
             })
-            getPreTrade("sell", scrollPage.sell, function(data){
+            getPreTrade("sell", 1, function(data){
                 fill(data, "sell", true)
             })
         });
@@ -524,12 +530,12 @@
         mui("#item1mobile").on("tap", ".list_btn", function(event) {
             console.log(event)
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
-            location.href = "buy.html?id=" + id;
+            location.href = "sell.html?id=" + id;
         });
         mui("#item2mobile").on("tap", ".list_btn", function(target) {
             console.log(event)
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
-            location.href = "sell.html?id=" + id;
+            location.href = "buy.html?id=" + id;
         });
     })(mui);
 
@@ -644,15 +650,14 @@
     function publishPretrade(){
         var data = {};
         data.tradeType = $("input[name=tradeType]").val();
-        data.ideaPrice = $("#IdeaPriceIpt").val();
-        data.minPrice = $("#MinPriceIpt").val();
-        data.maxPrice = $("#MaxPriceIpt").val()
+        data.ideaUnivalent = $("#IdeaPriceIpt").val();
+        data.minUnivalent = $("#MinPriceIpt").val();
+        data.maxUnivalent = $("#MaxPriceIpt").val()
         data.minAmount = $("#MinAmountIpt").val();
         data.maxAmount = $("#MaxAmountIpt").val();
         data.message = $("#MsgIpt").val();
         data.allAmount = $("#AllAmountIpt").val();
         // data.payChannel = $("#PayChannelIpt").val();
-        data.memberId = 16;
         data.coinType = "tfchain";
         var params = {
             data: data,
@@ -661,7 +666,8 @@
         };
         // todo validate data
         jsAjax.ajax(params, function(data) {
-            console.log("##### 发布挂单")
+            mui.alert("发布成功");
+            mui.back();
         }, function(XMLHttpRequest) {
             if(XMLHttpRequest == "relogin") {
                 mui.alert("登陆过期，请重新登陆")

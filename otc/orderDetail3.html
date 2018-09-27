@@ -52,55 +52,43 @@
 <div class="mui-content">
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
-			<div class="order_num">
-				订单号：12348654161624864123123
+			<div class="order_num" >
+				订单号： <span id="TradeIdArea"></span>
 			</div>
-			<div class="" style="float: right;">
-				待释放
-			</div>
+			<div class="" style="float: right;" id="EnsureStatusDisplayArea"></div>
 		</li>
 	</ul>
 
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
-			<div class="info_title">
+			<div class="info_title" >
 				实名信息
 			</div>
-			<div class="info_content">
-				往前飞
-			</div>
+			<div class="info_content" id="SellerNameArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				订单金额（CNY）
 			</div>
-			<div class="info_content">
-				500.312321
-			</div>
+			<div class="info_content" id="MoneyArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				数量（USDT）
 			</div>
-			<div class="info_content">
-				500.312321
-			</div>
+			<div class="info_content" id="AmountArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				单价（CNY）
 			</div>
-			<div class="info_content">
-				500.312321
-			</div>
+			<div class="info_content" id="UnivalentArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				下单时间
 			</div>
-			<div class="info_content">
-				2018-9-25 16:05:20
-			</div>
+			<div class="info_content" id="CreateTimeArea"></div>
 		</li>
 	</ul>
 	<ul class="mui-table-view">
@@ -116,22 +104,20 @@
 			<div class="" style="float: left; width: 40%;">
 				姓名
 			</div>
-			<div class="" style="float: left;">
-				往前飞
-			</div>
+			<div class="" style="float: left;" id="RealNameArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
-			<div class="" style="float: left; width: 40%;">
+			<div class="" style="float: left; width: 40%;" >
 				账号
 			</div>
-			<div class="" style="float: left;">
-				18775109030
-			</div>
+			<div class="" style="float: left;" id="AlipayArea"></div>
 		</li>
 
 	</ul>
 	<div class="mui-button-row">
-		<button type="button" class="mui-btn mui-btn-primary">释放比特币</button>
+		<!-- 根据不同的状态显示按钮 -->
+		<div style="display: none;" id="Tips">等待对方确认付款</div>
+		<button type="button" class="mui-btn mui-btn-primary" id="ReleaseBtn" style="display: none;" onclick="releaseCoin()">释放比特币</button>
 	</div>
 </div>
 <script src="js/mui.min.js"></script>
@@ -139,6 +125,28 @@
 <script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script>
     mui.init();
+
+    jsAjax.getOrder(jsAjax.getQueryString("id"),function(data){
+        console.log(data);
+        $("#TradeIdArea").text(data.id)
+        var ensureStatus = data.ensureStatus;
+        if(ensureStatus == "ensure4pay"){
+            $("#ReleaseBtn").show();
+            $("#EnsureStatusDisplayArea").text("待释放");
+        }else if(data.ensureStatus == "waiting") {
+            $("#Tips").show();
+            $("#EnsureStatusDisplayArea").text("待确认付款");
+        }else{
+            $("#EnsureStatusDisplayArea").text("未知");
+		}
+        $("#SellerNameArea").text(data.sellerName);
+        $("#MoneyArea").text(data.money);
+        $("#AmountArea").text(data.amount);
+        $("#UnivalentArea").text(data.univalent);
+		$("#CreateTimeArea").text(jsAjax.formatLongTime(data.createTime, "YYYY-MM-dd hh:mm:ss"))
+        $("#RealNameArea").text(data.realName);
+        $("#AlipayArea").text(data.alipay);
+	});
     document.querySelectorAll("button")[0].onclick = function() {
         console.log("取消")
 
@@ -152,6 +160,9 @@
         })
     }
 
+    // function releaseCoin(){
+     //
+	// }
 </script>
 </body>
 
