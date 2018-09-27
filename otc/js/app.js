@@ -31,6 +31,7 @@ Date.prototype.format = function (format) {
 
 var jsAjax = new function() {
     var me = this;
+    var default_time_format = "YYYY-MM-dd hh:mm:ss";
     this.ajax = function(params, success_callback, error_callback) { //网络请求
         if(!params) {
             mui.toast("jsAjax params is null");

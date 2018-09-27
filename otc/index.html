@@ -649,7 +649,7 @@
 
     function publishPretrade(){
         var data = {};
-        data.tradeType = $("input[name=tradeType]").val();
+        data.tradeType = $("input[name=tradeType]:checked").val();
         data.ideaUnivalent = $("#IdeaPriceIpt").val();
         data.minUnivalent = $("#MinPriceIpt").val();
         data.maxUnivalent = $("#MaxPriceIpt").val()

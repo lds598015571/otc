@@ -74,7 +74,7 @@
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
-				数量（USDT）
+				数量（TF）
 			</div>
 			<div class="info_content" id="AmountArea"></div>
 		</li>
@@ -94,7 +94,7 @@
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
 			<div class="order_num">
-				付款方式：
+				付款方：
 			</div>
 			<div class="" style="float: right;color: blue;">
 				支付宝
@@ -117,7 +117,7 @@
 	<div class="mui-button-row">
 		<!-- 根据不同的状态显示按钮 -->
 		<div style="display: none;" id="Tips">等待对方确认付款</div>
-		<button type="button" class="mui-btn mui-btn-primary" id="ReleaseBtn" style="display: none;" onclick="releaseCoin()">释放比特币</button>
+		<button type="button" class="mui-btn mui-btn-primary" id="ReleaseBtn" style="display: none;" onclick="ensureGet()">释放比特币</button>
 	</div>
 </div>
 <script src="js/mui.min.js"></script>
@@ -126,43 +126,55 @@
 <script>
     mui.init();
 
-    jsAjax.getOrder(jsAjax.getQueryString("id"),function(data){
+    var id = jsAjax.getQueryString("id")
+    jsAjax.getOrder(id, function(data){
         console.log(data);
-        $("#TradeIdArea").text(data.id)
-        var ensureStatus = data.ensureStatus;
+        var trade = data.trade;
+        var buyer = data.buyer;
+        var seller = data.seller;
+        $("#TradeIdArea").text(trade.id)
+        var ensureStatus = trade.ensureStatus;
         if(ensureStatus == "ensure4pay"){
             $("#ReleaseBtn").show();
             $("#EnsureStatusDisplayArea").text("待释放");
-        }else if(data.ensureStatus == "waiting") {
+        }else if(trade.ensureStatus == "none") {
             $("#Tips").show();
             $("#EnsureStatusDisplayArea").text("待确认付款");
         }else{
             $("#EnsureStatusDisplayArea").text("未知");
-		}
-        $("#SellerNameArea").text(data.sellerName);
-        $("#MoneyArea").text(data.money);
-        $("#AmountArea").text(data.amount);
-        $("#UnivalentArea").text(data.univalent);
-		$("#CreateTimeArea").text(jsAjax.formatLongTime(data.createTime, "YYYY-MM-dd hh:mm:ss"))
-        $("#RealNameArea").text(data.realName);
-        $("#AlipayArea").text(data.alipay);
-	});
-    document.querySelectorAll("button")[0].onclick = function() {
-        console.log("取消")
+        }
+        $("#SellerNameArea").text(trade.sellerName);
+        $("#MoneyArea").text(trade.money);
+        $("#AmountArea").text(trade.amount);
+        $("#UnivalentArea").text(trade.univalent);
+        $("#CreateTimeArea").text(jsAjax.formatLongTime(trade.createTime))
+        $("#RealNameArea").text(buyer.realName);
+        $("#AlipayArea").text(buyer.alipayAddress);
+    });
 
+    function ensureGet(){
         var btnArray = ['取消', '确认'];
-        mui.confirm("请确认", '确认释放比特币', btnArray, function(e) {
-            if(e.index == 1) {
-                console.log("确认")
-            } else {
-                console.log("取消")
+        mui.confirm("请确认", '已收款，释放比特币', btnArray, function(e) {
+            if(e.index == 0) {
+                return;
             }
+            var params = {
+                type: "post",
+                url: "/trade/order/ensure4get/" + id
+            };
+            jsAjax.ajax(params, function(data){
+                mui.alert("已确认收款，将自动转账。")
+				mui.back();
+            },function (XMLHttpRequest) {
+                if(XMLHttpRequest == "relogin") {
+                    mui.alert("登陆过期，请重新登陆")
+                    location.href = "index.html"
+                } else {
+                    mui.alert(XMLHttpRequest.responseJSON.message)
+                }
+            })
         })
     }
-
-    // function releaseCoin(){
-     //
-	// }
 </script>
 </body>
 

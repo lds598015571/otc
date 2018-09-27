@@ -53,11 +53,9 @@
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
 			<div class="order_num">
-				订单号：12348654161624864123123
+				订单号：<span id="TradeIdArea"></span>
 			</div>
-			<div class="" style="float: right;">
-				待支付
-			</div>
+			<div class="" style="float: right;" id="EnsureStatusDisplayArea"></div>
 		</li>
 	</ul>
 
@@ -66,47 +64,37 @@
 			<div class="info_title">
 				实名信息
 			</div>
-			<div class="info_content">
-				往前飞
-			</div>
+			<div class="info_content" id="SellerNameArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				订单金额（CNY）
 			</div>
-			<div class="info_content">
-				500.312321
-			</div>
+			<div class="info_content" id="MoneyArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
-				数量（USDT）
+				数量（TF）
 			</div>
-			<div class="info_content">
-				500.312321
-			</div>
+			<div class="info_content" id="AmountArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				单价（CNY）
 			</div>
-			<div class="info_content">
-				500.312321
-			</div>
+			<div class="info_content" id="UnivalentArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
 				下单时间
 			</div>
-			<div class="info_content">
-				2018-9-25 16:05:20
-			</div>
+			<div class="info_content" id="CreateTimeArea"></div>
 		</li>
 	</ul>
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
 			<div class="order_num">
-				付款方式：
+				收款方：
 			</div>
 			<div class="" style="float: right;color: blue;">
 				支付宝
@@ -116,23 +104,20 @@
 			<div class="" style="float: left; width: 40%;">
 				姓名
 			</div>
-			<div class="" style="float: left;">
-				往前飞
-			</div>
+			<div class="" style="float: left;" id="RealNameArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="" style="float: left; width: 40%;">
 				账号
 			</div>
-			<div class="" style="float: left;">
-				18775109030
-			</div>
+			<div class="" style="float: left;" id="AlipayArea"></div>
 		</li>
 
 	</ul>
 	<div class="mui-button-row">
 		<!--<button type="button" class="mui-btn mui-btn-danger">取消订单</button>-->
-		<button type="button" class="mui-btn mui-btn-primary">标记已付款</button>
+		<button type="button" class="mui-btn mui-btn-primary" id="MarkPayBtn" style="display: none;" onclick="ensurePay()">标记已付款</button>
+		<div style="display: none;" id="Tips">等待对方确认收款</div>
 	</div>
 </div>
 <script src="js/mui.min.js"></script>
@@ -140,7 +125,57 @@
 <script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script>
     mui.init();
-    document.querySelectorAll("button")[0].onclick = function() {
+    var id = jsAjax.getQueryString("id");
+    jsAjax.getOrder(id ,function(data){
+        console.log(data);
+        var trade = data.trade;
+        var buyer = data.buyer;
+        var seller = data.seller;
+        $("#TradeIdArea").text(trade.id)
+        var ensureStatus = trade.ensureStatus;
+        if(ensureStatus == "ensure4pay"){
+            $("#Tips").show();
+            $("#EnsureStatusDisplayArea").text("待释放");
+        }else if(trade.ensureStatus == "none") {
+            $("#MarkPayBtn").show();
+            $("#EnsureStatusDisplayArea").text("待确认付款");
+        }else{
+            $("#EnsureStatusDisplayArea").text("未知");
+        }
+        $("#SellerNameArea").text(trade.sellerName);
+        $("#MoneyArea").text(trade.money);
+        $("#AmountArea").text(trade.amount);
+        $("#UnivalentArea").text(trade.univalent);
+        $("#CreateTimeArea").text(jsAjax.formatLongTime(trade.createTime))
+        $("#RealNameArea").text(seller.realName);
+        $("#AlipayArea").text(seller.alipayAddress);
+    });
+
+    function ensurePay(){
+        var btnArray = ['取消', '确认'];
+        mui.confirm("确认是否已付款", '', btnArray, function(e) {
+            if(e.index == 0) {
+                return;
+            }
+            var params = {
+                type: "post",
+                url: "/trade/order/ensure4pay/" + id
+            };
+            jsAjax.ajax(params, function(data){
+                mui.alert("标记付款成功");
+				mui.back();
+            },function (XMLHttpRequest) {
+                if(XMLHttpRequest == "relogin") {
+                    mui.alert("登陆过期，请重新登陆")
+                    location.href = "index.html"
+                } else {
+                    mui.alert(XMLHttpRequest.responseJSON.message)
+                }
+            })
+        })
+    }
+
+    /*document.querySelectorAll("button")[0].onclick = function() {
         console.log("取消")
 
         var btnArray = ['取消', '确认'];
@@ -151,19 +186,7 @@
                 console.log("取消")
             }
         })
-
-    }
-    document.querySelectorAll("button")[1].onclick = function() {
-        console.log("确认")
-        var btnArray = ['取消', '确认'];
-        mui.confirm("确认是否已付款", '', btnArray, function(e) {
-            if(e.index == 1) {
-                console.log("确认")
-            } else {
-                console.log("取消")
-            }
-        })
-    }
+    }*/
 </script>
 </body>
 
