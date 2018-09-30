@@ -200,7 +200,7 @@
 
 		<div class="mui-slider-group">
 			<!-- 购买单列表 -->
-			<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+			<div id="item2mobile" class="mui-slider-item mui-control-content mui-active">
 				<div id="buy-scroll" class="mui-scroll-wrapper">
 					<div class="mui-scroll" id="tfbuy-scroll">
 						<ul class="mui-table-view" id="tf-buy"></ul>
@@ -208,7 +208,7 @@
 				</div>
 			</div>
 			<!-- 出售单列表 -->
-			<div id="item2mobile" class="mui-slider-item mui-control-content">
+			<div id="item1mobile" class="mui-slider-item mui-control-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll" id="tfsell-scroll">
 						<ul class="mui-table-view" id="tf-sell"></ul>
@@ -364,7 +364,7 @@
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
 			<span class="mui-h5"><%=item.ideaUnivalent%></span>
-			<button class="list_btn" name="<%=item.id%>">出售TF</button>
+			<button class="list_btn" name="<%=item.id%>">购买TF</button>
 		</div>
 	</div>
 	%>
@@ -374,7 +374,7 @@
 	<%
 	<div class="mui-table">
 		<div class="mui-table-cell mui-col-xs-10">
-			<h4 class="mui-ellipsis"><%=item.id%></h4>
+			<h4 class="mui-ellipsis"><%=item.id%> | </h4> <!--<%=item%>-->
 			<span class="mui-badge mui-badge-success">支付宝</span>
 			<div class="mui-clearfix"></div>
 			<h5>好评**|信任**</h5>
@@ -382,7 +382,7 @@
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
 			<span class="mui-h5"><%=item.ideaUnivalent%></span>
-			<button class="list_btn" name="<%=item.id%>">购买TF</button>
+			<button class="list_btn" name="<%=item.id%>">出售TF</button>
 		</div>
 	</div>
 	%>
