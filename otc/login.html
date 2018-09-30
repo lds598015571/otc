@@ -1,154 +1,149 @@
 <!doctype html>
 <html>
 
-<head>
-	<meta charset="UTF-8">
-	<title>OTC登陆</title>
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<link href="css/mui.min.css" rel="stylesheet" />
-	<style>
-		.area {
-			margin: 20px auto 0px auto;
-		}
+	<head>
+		<meta charset="UTF-8">
+		<title>OTC登陆</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 35%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.yzm_btn {
+				width: 25%;
+				float: right;
+				border-radius: 0;
+				margin-right: 1%;
+				margin-top: 3px;
+				border: none;
+				color: #FFFFFF;
+				background-color: #CCCCCC;
+			}
+		</style>
+	</head>
 
-		.mui-input-group {
-			margin-top: 10px;
-		}
+	<body>
 
-		.mui-input-group:first-child {
-			margin-top: 20px;
-		}
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">登录</h1>
+		</header>
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>手机号</label>
+					<input type="text" class="mui-input-clear mui-input" id="LoginstrIpt" placeholder="请输入手机号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input type="password" class="mui-input-clear mui-input" id="LoginpwdIpt" placeholder="请输入密码">
+				</div>
+				<!--<div class="mui-input-row">
+					<label>验证码</label>
+					<button class="yzm_btn" type="button" onclick="sendCode()">获取验证码</button>
+					<input type="text" id="CodeIpt" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 39%;" />
+				</div>-->
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="login()">登录</button>
+				<div class="link-area" style="text-align: center;margin-top: 20px;">
+					<a id='reg' href="reg.html">注册账号</a>
+				</div>
+			</div>
 
-		.mui-input-group label {
-			width: 22%;
-		}
-
-		.mui-input-row label~input,
-		.mui-input-row label~select,
-		.mui-input-row label~textarea {
-			width: 78%;
-		}
-
-		.mui-checkbox input[type=checkbox],
-		.mui-radio input[type=radio] {
-			top: 6px;
-		}
-
-		.mui-content-padded {
-			margin-top: 25px;
-		}
-
-		.mui-btn {
-			padding: 10px;
-		}
-
-		.link-area {
-			display: block;
-			margin-top: 25px;
-			text-align: center;
-		}
-
-		.spliter {
-			color: #bbb;
-			padding: 0px 8px;
-		}
-
-		.oauth-area {
-			position: absolute;
-			bottom: 20px;
-			left: 0px;
-			text-align: center;
-			width: 100%;
-			padding: 0px;
-			margin: 0px;
-		}
-
-		.oauth-area .oauth-btn {
-			display: inline-block;
-			width: 50px;
-			height: 50px;
-			background-size: 30px 30px;
-			background-position: center center;
-			background-repeat: no-repeat;
-			margin: 0px 20px;
-			/*-webkit-filter: grayscale(100%); */
-			border: solid 1px #ddd;
-			border-radius: 25px;
-		}
-
-		.oauth-area .oauth-btn:active {
-			border: solid 1px #aaa;
-		}
-
-		.oauth-area .oauth-btn.disabled {
-			background-color: #ddd;
-		}
-	</style>
-</head>
-
-<body>
-
-<header class="mui-bar mui-bar-nav">
-	<h1 class="mui-title">登录</h1>
-</header>
-<div class="mui-content">
-	<form id='login-form' class="mui-input-group">
-		<div class="mui-input-row">
-			<label>账号</label>
-			<input type="text" class="mui-input-clear mui-input" id="LoginstrIpt" placeholder="请输入账号">
 		</div>
-		<div class="mui-input-row">
-			<label>密码</label>
-			<input type="password" class="mui-input-clear mui-input" id="LoginpwdIpt"  placeholder="请输入密码">
-		</div>
-	</form>
-	<!--<form class="mui-input-group">
-        <ul class="mui-table-view mui-table-view-chevron">
-            <li class="mui-table-view-cell">
-                自动登录
-                <div id="autoLogin" class="mui-switch">
-                    <div class="mui-switch-handle"></div>
-                </div>
-            </li>
-        </ul>
-    </form>-->
-	<div class="mui-content-padded">
-		<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="login()">登录</button>
-		<div class="link-area">
-			<a id='reg' href="reg.html">注册账号</a>
-		</div>
-	</div>
 
-</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			var downTime = 60;
+//			document.querySelector(".yzm_btn").onclick = function() {
+//				console.log("获取验证码")
+//				setTime();
+//			}
 
-<script src="js/mui.min.js"></script>
-<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-    mui.init();
-    function login(){
-        var data = {};
-        data.mobile = $("#LoginstrIpt").val();
-        data.password = $("#LoginpwdIpt").val();
-        var params = {
-            data: data,
-            url: "/member/login",  // todo
-            type: "post",
-        };
-        // todo validate data
-        jsAjax.ajax(params, function(data) {
-            sessionStorage.setItem("login", true);
-            location.href = "index.html";
-        }, function(XMLHttpRequest) {
-            if(XMLHttpRequest == "relogin") {
-                mui.alert("登陆过期，请重新登陆")
-                location.href = "index.html"
-            } else {
-                mui.alert(XMLHttpRequest.responseJSON.message)
-            }
-        });
-    }
-</script>
-</body>
+			function setTime() {
+				setTimeout(function() {
+					if(downTime > 0) {
+						document.querySelector(".yzm_btn").disabled = "disabled"; //禁用获取验证码按钮
+						document.querySelector(".yzm_btn").innerHTML = downTime + "s";
+						downTime--;
+						setTime();
+					} else {
+						document.querySelector(".yzm_btn").removeAttribute("disabled");
+						document.querySelector(".yzm_btn").innerHTML = "获取验证码"
+						downTime = 60;
+					}
+				}, 1000)
+			}
+
+			function login() {
+				var _mobile = $("#LoginstrIpt").val();
+				var _password = $("#LoginpwdIpt").val();
+				if(!_mobile){
+					mui.alert("请输入手机号");
+					return;
+				}
+				var re = /^1[3|4|5|7|8]\d{9}$/ig;
+				if(!re.test(_mobile)) {
+					mui.alert("请输入正确的手机号")
+					return;
+				}
+				if(!_password){
+					mui.alert("请输入密码");
+					return;
+				}
+				var data = {};				
+				data.mobile = _mobile;				
+				data.password = _password;
+				var params = {
+					data: data,
+					url: "/member/login", // todo
+					type: "post",
+				};
+				// todo validate data
+				jsAjax.ajax(params, function(data) {
+					sessionStorage.setItem("login", true);
+					location.href = "index.html";
+				}, function(XMLHttpRequest) {
+					if(XMLHttpRequest == "relogin") {
+						mui.alert("登陆过期，请重新登陆")
+						location.href = "index.html"
+					} else {
+						mui.alert(XMLHttpRequest.responseJSON.message)
+					}
+				});
+			}
+		</script>
+	</body>
 
 </html>

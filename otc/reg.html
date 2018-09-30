@@ -1,146 +1,209 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<title>注册</title>
-	<link href="css/mui.min.css" rel="stylesheet" />
-	<style>
-		.area {
-			margin: 20px auto 0px auto;
-		}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>注册</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 35%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.yzm_btn {
+				width: 25%;
+				float: right;
+				border-radius: 0;
+				margin-right: 1%;
+				margin-top: 3px;
+				border: none;
+				color: #FFFFFF;
+				background-color: #CCCCCC;
+			}
+		</style>
+	</head>
 
-		.mui-input-group:first-child {
-			margin-top: 20px;
-		}
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>手机号</label>
+					<input type="text" id="MobileIpt" class="mui-input-clear mui-input" placeholder="请输入手机号" />
+				</div>
+				<div class="mui-input-row">
+					<label>验证码</label>
+					<button class="yzm_btn" type="button" onclick="sendCode()">获取验证码</button>
+					<input type="number" id="CodeIpt" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 39%;" />
 
-		.mui-input-group label {
-			width: 35%;
-		}
+				</div>
+				<div class="mui-input-row">
+					<label>昵称</label>
+					<input type="text" id="NameIpt" class="mui-input-clear mui-input" placeholder="请输入昵称" />
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input type="password" id="PasswordIpt" class="mui-input-clear mui-input" placeholder="请输入密码" />
+				</div>
+				<div class="mui-input-row">
+					<label>确认密码</label>
+					<input type="password" id="Password2Ipt" class="mui-input-clear mui-input" placeholder="请确认密码" />
+				</div>
 
-		.mui-input-row label~input,
-		.mui-input-row label~select,
-		.mui-input-row label~textarea {
-			width: 65%;
-		}
-
-		.mui-checkbox input[type=checkbox],
-		.mui-radio input[type=radio] {
-			top: 6px;
-		}
-
-		.mui-content-padded {
-			margin-top: 25px;
-		}
-
-		.mui-btn {
-			padding: 10px;
-		}
-
-		.yzm_btn {
-			width: 25%;
-			float: right;
-			border-radius: 0;
-			margin-right: 1%;
-			margin-top: 3px;
-			border: none;
-			color: #FFFFFF;
-			background-color: #CCCCCC;
-		}
-	</style>
-</head>
-
-<body>
-<header class="mui-bar mui-bar-nav">
-	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">注册</h1>
-</header>
-<div class="mui-content">
-	<form class="mui-input-group">
-		<div class="mui-input-row">
-			<label>手机号</label>
-			<input type="text" id="MobileIpt" class="mui-input-clear mui-input" placeholder="请输入账号" />
+			</form>
+			<div class="mui-content-padded">
+				<button class="mui-btn mui-btn-block mui-btn-primary" onclick="regist()">注册</button>
+			</div>
 		</div>
-		<div class="mui-input-row">
-			<label>验证码</label>
-			<button class="yzm_btn" type="button" onclick="sendCode()">获取验证码</button>
-			<input type="text" id="CodeIpt" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 39%;" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			var downTime = 60;
 
-		</div>
-		<div class="mui-input-row">
-			<label>昵称</label>
-			<input type="text" id="NameIpt" class="mui-input-clear mui-input" placeholder="请输入昵称" />
-		</div>
-		<div class="mui-input-row">
-			<label>密码</label>
-			<input type="password" id="PasswordIpt" class="mui-input-clear mui-input" placeholder="请输入密码" />
-		</div>
-		<div class="mui-input-row">
-			<label>确认密码</label>
-			<input type="password" id="Password2Ipt" class="mui-input-clear mui-input" placeholder="请确认密码" />
-		</div>
+			function sendCode() {
+				var mobile = $("#MobileIpt").val();
+				if(!mobile) {
+					mui.alert("请输入手机号")
+					return;
+				}
+				var re = /^1[3|4|5|7|8]\d{9}$/ig;
+				if(!re.test(mobile)) {
+					mui.alert("请输入正确的手机号")
+					return;
+				}
+				console.log("获取验证码")
+				document.querySelector(".yzm_btn").disabled = "disabled"
+				setTime();
+				var params = {
+					url: "/member/regist/code/" + mobile, // todo
+				};
+				// todo validate data
+				jsAjax.ajax(params, function(data) {
+					mui.alert("验证码发送成功： " + data);
+				}, function(XMLHttpRequest) {
+					if(XMLHttpRequest == "relogin") {
+						mui.alert("登陆过期，请重新登陆")
+						location.href = "index.html"
+					} else {
+						mui.alert(XMLHttpRequest.responseJSON.message)
+					}
+				});
+			}
 
-	</form>
-	<div class="mui-content-padded">
-		<button class="mui-btn mui-btn-block mui-btn-primary" onclick="regist()">注册</button>
-	</div>
-</div>
-<script src="js/mui.min.js"></script>
-<script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-    mui.init();
+			function regist() {
+				var _mobile = $("#MobileIpt").val();
+				var _checkCode = $("#CodeIpt").val();
+				var _name = $("#NameIpt").val();
+				var _password = $("#PasswordIpt").val();
+				var _password2 = $("#Password2Ipt").val();
 
-    function sendCode(){
-        var mobile = $("#MobileIpt").val();
-        if(!mobile){
-            mui.alert("请输入手机号")
-            return;
-		}
-        var params = {
-            url: "/member/regist/code/" + mobile,  // todo
-        };
-        // todo validate data
-        jsAjax.ajax(params, function(data) {
-            mui.alert("验证码发送成功： " + data);
-        }, function(XMLHttpRequest) {
-            if(XMLHttpRequest == "relogin") {
-                mui.alert("登陆过期，请重新登陆")
-                location.href = "index.html"
-            } else {
-                mui.alert(XMLHttpRequest.responseJSON.message)
-            }
-        });
-    }
+				if(!_mobile) {
+					mui.alert("请输入手机号")
+					return;
+				}
+				var re = /^1[3|4|5|7|8]\d{9}$/ig;
+				if(!re.test(_mobile)) {
+					mui.alert("请输入正确的手机号")
+					return;
+				}
+				if(!_checkCode) {
+					mui.alert("请输入验证码")
+					return;
+				}
+				if(!_name) {
+					mui.alert("请输入昵称")
+					return;
+				}
+				if(_name.length > 8) {
+					mui.alert("昵称不能超过8个字符")
+					return;
+				}
+				if(!_password) {
+					mui.alert("请输入密码")
+					return;
+				}
+				if(!(/^[a-zA-Z0-9]+$/.test(_password)) || _password.length < 6 || _password.length > 12) {
+					mui.alert("密码由6-12位数字与英文字母组成");
+					return;
+				}
+				if(!_password2) {
+					mui.alert("请输入确认密码")
+					return;
+				}
+				if(_password != _password2) {
+					mui.alert("两次密码不一致")
+					return;
+				}
+				var data = {};
+				data.mobile = _mobile;
+				data.name = _name;
+				data.checkCode = _checkCode;
+				data.password = _password;
+				var param = {
+					type: "post",
+					data: data,
+					url: "/member/regist"
+				};
+				jsAjax.ajax(param, function(data) {
+					location.href = "login.html";
+				}, function(XMLHttpRequest) {
+					if(XMLHttpRequest == "relogin") {
+						mui.alert("登陆过期，请重新登陆")
+						location.href = "index.html"
+					} else {
+						mui.alert(XMLHttpRequest.responseJSON.message)
+					}
+				});
+			}
 
-    function regist(){
-        var data = {};
-        data.mobile = $("#MobileIpt").val();
-        data.name = $("#NameIpt").val();
-        data.checkCode = $("#CodeIpt").val();
-        data.password = $("#PasswordIpt").val();
-        if(!data.mobile || !data.name || !data.checkCode || !data.password){
-            mui.alert("请完成输入")
-            return;
-		}
-		var param = {
-            type: "post",
-			data: data,
-			url: "/member/regist"
-		};
-        jsAjax.ajax(param, function(data) {
-            location.href = "login.html";
-        }, function(XMLHttpRequest) {
-            if(XMLHttpRequest == "relogin") {
-                mui.alert("登陆过期，请重新登陆")
-                location.href = "index.html"
-            } else {
-                mui.alert(XMLHttpRequest.responseJSON.message)
-            }
-        });
-    }
-</script>
-</body>
+			function setTime() {
+				setTimeout(function() {
+					if(downTime > 0) {
+						document.querySelector(".yzm_btn").innerHTML = downTime + "s";
+						downTime--;
+						setTime();
+					} else {
+						document.querySelector(".yzm_btn").removeAttribute("disabled");
+						document.querySelector(".yzm_btn").innerHTML = "获取验证码"
+						downTime = 60;
+					}
+				}, 1000)
+
+			}
+		</script>
+	</body>
 
 </html>
