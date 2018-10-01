@@ -48,11 +48,11 @@
 					<label>确认密码</label>
 					<input type="password" class="mui-input-password" placeholder="请输入新密码" id="NewPwd2Ipt" />
 				</div>
-				<div class="mui-input-row">
+				<!--<div class="mui-input-row">
 					<label>验证码</label>
 					<button class="yzm_btn" type="button" onclick="sendCode()">获取验证码</button>
 					<input type="text" id="CodeIpt" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 39%;" />
-				</div>
+				</div>-->
 				<div class="mui-button-row">
 					<button type="button" class="mui-btn mui-btn-primary" onclick="changeTradePwd()">确认</button>
 					<button type="reset" class="mui-btn mui-btn-danger">重置</button>
@@ -112,10 +112,10 @@
 					mui.alert("两次密码不一致")
 					return;
 				}
-				if(!_CodeIpt) {
+				/*if(!_CodeIpt) {
 					mui.alert("请输入验证码")
 					return;
-				}
+				}*/
 				var data = {};
 				data.newTradePassword = _newLoginPassword;
 				data.oldTradePassword = _oldLoginPassword;

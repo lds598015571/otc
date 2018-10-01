@@ -127,77 +127,14 @@
 			<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 				<div id="scroll1" class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-1
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-2
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-3
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-4
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-5
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-6
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-7
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-8
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-9
-							</li>
-							<li class="mui-table-view-cell">
-								第1个选项卡子项-10
-							</li>
-
-						</ul>
+						<ul class="mui-table-view"></ul>
 					</div>
 				</div>
 			</div>
 			<div id="item2mobile" class="mui-slider-item mui-control-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-1
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-2
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-3
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-4
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-5
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-6
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-7
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-8
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-9
-							</li>
-							<li class="mui-table-view-cell">
-								第2个选项卡子项-10
-							</li>
-						</ul>
+						<ul class="mui-table-view"></ul>
 					</div>
 				</div>
 			</div>
@@ -210,6 +147,23 @@
 <script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/mui.pullToRefresh.js"></script>
 <script src="js/mui.pullToRefresh.material.js"></script>
+<script type="text/template" id="tpl-sell">
+	<%
+	<div class="mui-table">
+		<div class="mui-table-cell mui-col-xs-10">
+			<h4 class="mui-ellipsis"><%=item.id%> | <%=name%></h4> <!--<%=item%>-->
+			<span class="mui-badge mui-badge-success">支付宝</span>
+			<div class="mui-clearfix"></div>
+			<h5>好评**|信任**</h5>
+			<p class="mui-h6 mui-ellipsis">限额 <%=item.minAmount%> - <%=item.maxAmount%></p>
+		</div>
+		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+			<span class="mui-h5"><%=item.ideaUnivalent%> CNY</span>
+			<button class="list_btn" name="<%=item.id%>">购买<%=item.coinType%></button>
+		</div>
+	</div>
+	%>
+</script>
 <script>
     mui.init();
     (function($) {
@@ -222,49 +176,90 @@
         });
         $.ready(function() {
             //循环初始化所有下拉刷新，上拉加载。
-            $.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-                $(pullRefreshEl).pullToRefresh({
-                    down: {
-                        callback: function() {
-                            var self = this;
-                            setTimeout(function() {
-                                var ul = self.element.querySelector('.mui-table-view');
-                                ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-                                self.endPullDownToRefresh();
-                            }, 1000);
-                        }
-                    },
-                    up: {
-                        callback: function() {
-                            var self = this;
-                            setTimeout(function() {
-                                var ul = self.element.querySelector('.mui-table-view');
-                                ul.appendChild(createFragment(ul, index, 5));
-                                self.endPullUpToRefresh();
-                            }, 1000);
-                        }
+            $("#tfbuy-scroll").pullToRefresh({
+                down: {
+                    callback: function() {
+                        console.log("刷新购买单数据")
+                        var self = this;
+                        setTimeout(function() {
+                            getPreTrade("sell", 1, function(data){
+                                fill(data, "sell", true)
+                            });
+                            self.endPullDownToRefresh()
+                        }, 1000);
                     }
-                });
-            });
-            var createFragment = function(ul, index, count, reverse) {
-                var length = ul.querySelectorAll('li').length;
-                var fragment = document.createDocumentFragment();
-                var li;
-                for(var i = 0; i < count; i++) {
-                    li = document.createElement('li');
-                    li.className = 'mui-table-view-cell';
-                    li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
-                    fragment.appendChild(li);
+                },
+                up: {
+                    callback: function() {
+                        console.log("加载更多购买单数据")
+                        var self = this;
+                        setTimeout(function() {
+                            getPreTrade("sell", scrollPage.sell + 1, function(data){
+                                fill(data, "sell")
+                            });
+                            self.endPullUpToRefresh();
+                        }, 1000);
+                    }
                 }
-                return fragment;
-            };
+            })
+            getPreTrade("sell", 1, function(data){
+                fill(data, "sell", true)
+            })
         });
         document.querySelector("header").querySelector("a").onclick = function() {
             console.log(123)
             window.history.go(-1);
-
         }
     })(mui);
+
+    function fill(data, type, reload) {
+        var doc = $("#tf-" + type);
+        if(reload) {
+            doc.empty();
+        }
+        doc.append(createPreOrderFragment(data.data, type));
+        scrollPage[type] = data.page
+    }
+
+    var createPreOrderFragment = function(preOrder, type) {
+        var fragment = document.createDocumentFragment();
+        var li;
+        $.each(preOrder, function(index, value) {
+            li = document.createElement('li');
+            li.className = 'mui-table-view-cell';
+            if(value.preTrade.coinType == "tfchain"){
+                value.preTrade.coinType = "TF";
+            }
+
+            var str = template('tpl-' + type, {
+                item: value.preTrade,
+                name: value.name,
+            })
+            li.innerHTML = str;
+            fragment.appendChild(li);
+        });
+        return fragment;
+    }
+
+    function getPreTrade(type, page, callback) {
+        console.log("获取挂单信息")
+        var params = {};
+        params.url = "/trade/pre/list?size=10&type=" + type + "&page=" + page;
+        jsAjax.ajax(params, function(data) {
+            console.log(data)
+            scrollPage[type] = data.page
+            if(callback) {
+                callback(data)
+            }
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
+    }
 </script>
 </body>
 

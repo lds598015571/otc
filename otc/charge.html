@@ -58,9 +58,10 @@
 	</a>
 	<div class="mui-collapse-content">
 		<div class="userQRCodeImageDiv" id="<%=item.coinType%>Img"></div>
-		<div class="userQRCodeCardNum" >
+		<div class="userQRCodeCardNum" id="<%=item.coinType%>Address">
 			<%=item.coinAddress%>
 		</div>
+		<button type="button" class="mui-btn mui-btn-primary" onclick="copyAddress('<%=item.coinType%>'+'Address')">复制地址</button>
 	</div>
 	%>
 </script>
@@ -135,6 +136,18 @@
             text: coinAddress
         });
     }
+    function copyAddress(id){
+        const input = document.createElement('input');
+        document.body.appendChild(input);
+        input.setAttribute("type","text");
+        input.setAttribute('value', $("#" + id).text().trim());
+        input.select();
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+           mui.alert('复制成功');
+        }
+        document.body.removeChild(input);
+	}
 </script>
 </body>
 

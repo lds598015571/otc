@@ -191,10 +191,10 @@
 		<span class="mui-icon mui-icon-undo"></span>
 		<span class="mui-tab-label">购买</span>
 	</a>
-	<a id="Tab2" class="mui-tab-item" onclick="changeTab('item2mobile')">
-		<span class="mui-icon mui-icon-redo"></span>
-		<span class="mui-tab-label">出售</span>
-	</a>
+	<!--	<a id="Tab2" class="mui-tab-item" onclick="changeTab('item2mobile')">
+            <span class="mui-icon mui-icon-redo"></span>
+            <span class="mui-tab-label">出售</span>
+        </a>-->
 	<a id="Tab3" class="mui-tab-item" onclick="changeTab('item3mobile')">
 		<!--href="#item3mobile"-->
 		<span class="mui-icon mui-icon-paperplane"></span>
@@ -215,18 +215,18 @@
 			<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 				<div id="buy-scroll" class="mui-scroll-wrapper">
 					<div class="mui-scroll" id="tfbuy-scroll">
-						<ul class="mui-table-view" id="tf-buy"></ul>
+						<ul class="mui-table-view" id="tf-sell"></ul>
 					</div>
 				</div>
 			</div>
 			<!-- 出售单列表 -->
-			<div id="item2mobile" class="mui-slider-item mui-control-content">
+			<!--<div id="item2mobile" class="mui-slider-item mui-control-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll" id="tfsell-scroll">
 						<ul class="mui-table-view" id="tf-sell"></ul>
 					</div>
 				</div>
-			</div>
+			</div>-->
 			<!-- 发布 -->
 			<div id="item3mobile" class="mui-slider-item mui-control-content " style="overflow-y:auto;">
 				<div class="mui-col-sm-12">
@@ -242,42 +242,42 @@
 								<label>在线出售TF</label>
 								<input name="tradeType" value="sell" type="radio" checked onchange="changePreOrderType(this)" />
 							</div>
-							<div class="mui-input-row mui-radio">
+							<!--<div class="mui-input-row mui-radio">
 								<label>在线购买TF</label>
 								<input name="tradeType" value="buy" type="radio" onchange="changePreOrderType(this)" />
-							</div>
+							</div>-->
 						</form>
 					</div>
 					<div class="mui-card">
 						<div class="mui-card-content">
 							<div class="mui-card-content-inner">
-								市场参考价：<span id="CoinPrice"></span>
+								市场参考价：<span id="CoinPrice"></span> CNY
 							</div>
 							<form class="mui-input-group" id="PreTradeForm">
 								<div class="mui-input-row">
-									<label>期望价格：</label>
-									<input type="text" placeholder="请输入期望价格" id="IdeaPriceIpt" />
+									<label>交易价格：</label>
+									<input type="number" placeholder="请输入期望价格" id="IdeaPriceIpt" />
 								</div>
-								<div class="mui-input-row input-sell-min">
+								<!--<div class="mui-input-row input-sell-min">
 									<label>最低价格：</label>
-									<input type="text" placeholder="请输入最低价格" id="MinPriceIpt" />
-								</div>
+									<input type="number" placeholder="请输入最低价格" id="MinPriceIpt" />
+								</div>-->
 								<div class="mui-input-row input-buy-max" style="display: none">
 									<label>最高价格：</label>
-									<input type="text" placeholder="请输入最高价格" id="MaxPriceIpt" />
+									<input type="number" placeholder="请输入最高价格" id="MaxPriceIpt" />
 								</div>
 								<div class="mui-input-row">
 									<label>总量：</label>
-									<input type="text" placeholder="请输入总量" id="AllAmountIpt" />
+									<input type="number" placeholder="请输入总量" id="AllAmountIpt" />
 								</div>
 								<div class="mui-input-row">
-									<label>最小量：</label>
-									<input type="text" placeholder="请输入最小量" id="MinAmountIpt" />
+									<label>交易最小量：</label>
+									<input type="number" placeholder="请输入最小量" id="MinAmountIpt" />
 								</div>
-								<div class="mui-input-row">
+								<!--<div class="mui-input-row">
 									<label>最大量：</label>
-									<input type="text" placeholder="请输入最大量" id="MaxAmountIpt" />
-								</div>
+									<input type="number" placeholder="请输入最大量" id="MaxAmountIpt" disabled/>
+								</div>-->
 								<!--<div class="mui-input-row">
                                     <label>验证码：</label>
                                     <button class="yzm_btn" type="button" onclick="sendCode()">获取验证码</button>
@@ -303,7 +303,7 @@
 					<div class="user_text" id="UserName">****</div>
 					<div class="user_text" id="UserMobile">****</div>
 					<div class="user_text">
-						交易<span id="UserTradeCount">0</span>|好评<span id="UserUpcount">0</span>|信任<span id="UserScore">0</span>
+						<!--交易<span id="UserTradeCount">0</span>|-->好评<span id="UserUpcount">***</span>|信任<span id="UserScore">***</span>
 					</div>
 					<div class="user_text">
 						可用资产：<span id="UserBalance">0</span>TF 冻结资产：<span id="UserFreeze">0</span>TF
@@ -330,7 +330,7 @@
 							</a>
 						</li>
 						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right" href="advertising.html">
+							<a class="mui-navigate-right" href="mypreorders.html">
 								我的挂单
 							</a>
 						</li>
@@ -347,13 +347,16 @@
 								修改交易密码
 							</a>
 						</li>
+						<li class="mui-table-view-cell">
+							<a class="mui-navigate-right" href="chginfo.html">
+								修改用户信息
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
 </div>
 <script src="js/mui.min.js"></script>
 <script src="js/mui.pullToRefresh.js"></script>
@@ -361,11 +364,11 @@
 <script src="js/arttmpl.js"></script>
 <script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/template" id="tpl-buy">
+<!--<script type="text/template" id="tpl-buy">
 	<%
 	<div class="mui-table">
 		<div class="mui-table-cell mui-col-xs-10">
-			<h4 class="mui-ellipsis"><%=item.id%></h4>
+			<h4 class="mui-ellipsis"><%=item.id%> | <%=name%></h4>
 			<span class="mui-badge mui-badge-success">支付宝</span>
 			<div class="mui-clearfix"></div>
 			<h5>好评**|信任**</h5>
@@ -373,24 +376,24 @@
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
 			<span class="mui-h5"><%=item.ideaUnivalent%></span>
-			<button class="list_btn" name="<%=item.id%>">购买TF</button>
+			<button class="list_btn" name="<%=item.id%>">购买<%=item.coinType%></button>
 		</div>
 	</div>
 	%>
-</script>
+</script>-->
 <script type="text/template" id="tpl-sell">
 	<%
 	<div class="mui-table">
 		<div class="mui-table-cell mui-col-xs-10">
-			<h4 class="mui-ellipsis"><%=item.id%> | </h4> <!--<%=item%>-->
+			<h4 class="mui-ellipsis"><%=item.id%> | <%=name%></h4> <!--<%=item%>-->
 			<span class="mui-badge mui-badge-success">支付宝</span>
 			<div class="mui-clearfix"></div>
 			<h5>好评**|信任**</h5>
 			<p class="mui-h6 mui-ellipsis">限额 <%=item.minAmount%> - <%=item.maxAmount%></p>
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-			<span class="mui-h5"><%=item.ideaUnivalent%></span>
-			<button class="list_btn" name="<%=item.id%>">出售TF</button>
+			<span class="mui-h5"><%=item.ideaUnivalent%> CNY</span>
+			<button class="list_btn" name="<%=item.id%>" onclick="toBuypage(<%=item.id%>)">购买<%=item.coinType%></button>
 		</div>
 	</div>
 	%>
@@ -428,8 +431,8 @@
                         console.log("刷新购买单数据")
                         var self = this;
                         setTimeout(function() {
-                            getPreTrade("buy", 1, function(data){
-                                fill(data, "buy", true)
+                            getPreTrade("sell", 1, function(data){
+                                fill(data, "sell", true)
                             });
                             self.endPullDownToRefresh()
                         }, 1000);
@@ -440,15 +443,15 @@
                         console.log("加载更多购买单数据")
                         var self = this;
                         setTimeout(function() {
-                            getPreTrade("buy", scrollPage.buy + 1, function(data){
-                                fill(data, "buy")
+                            getPreTrade("sell", scrollPage.sell + 1, function(data){
+                                fill(data, "sell")
                             });
                             self.endPullUpToRefresh();
                         }, 1000);
                     }
                 }
             })
-            $("#tfsell-scroll").pullToRefresh({
+            /*$("#tfsell-scroll").pullToRefresh({
                 down: {
                     callback: function() {
                         console.log("刷新出售单数据")
@@ -473,10 +476,10 @@
                         }, 1000);
                     }
                 }
-            })
-            getPreTrade("buy", 1, function(data){
+            })*/
+            /*getPreTrade("buy", 1, function(data){
                 fill(data, "buy", true)
-            })
+            })*/
             getPreTrade("sell", 1, function(data){
                 fill(data, "sell", true)
             })
@@ -485,14 +488,18 @@
         mui("#item1mobile").on("tap", ".list_btn", function(event) {
             console.log(event)
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
-            location.href = "sell.html?id=" + id;
+            location.href = "buy.html?id=" + id;
         });
-        mui("#item2mobile").on("tap", ".list_btn", function(target) {
+        /*mui("#item2mobile").on("tap", ".list_btn", function(target) {
             console.log(event)
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
             location.href = "buy.html?id=" + id;
-        });
+        });*/
     })(mui);
+
+	function toBuypage(id){
+        location.href = "buy.html?id=" + id;
+	}
 
     function changeTab(tab) {
         document.getElementById(tab).scrollIntoView();
@@ -509,8 +516,8 @@
                 $("#UserName").text(info.name);
                 $("#UserMobile").text(info.mobile);
                 $("#UserTradeCount").text(info.tradeCount);
-                $("#UserUpcount").text(info.upcount);
-                $("#UserScore").text(info.score);
+                // $("#UserUpcount").text(info.upcount);
+                // $("#UserScore").text(info.score);
 
                 if(info.accountInfo){
                     $("#UserBalance").text(info.accountInfo.tfchain_balance);
@@ -525,25 +532,23 @@
             $("#IndexNavTitle").text("购买列表");
         }
     }
-
-    =======
-        function getUserInfo(callback) {
-            var params = {
-                url: "/member/detail"
-            }
-            jsAjax.ajax(params, function(data) {
-                if(callback) {
-                    callback(data)
-                }
-            }, function(XMLHttpRequest) {
-                if(XMLHttpRequest == "relogin") {
-                    mui.alert("登陆过期，请重新登陆")
-                    location.href = "index.html"
-                } else {
-                    mui.alert(XMLHttpRequest.responseJSON.message)
-                }
-            });
+    function getUserInfo(callback) {
+        var params = {
+            url: "/member/detail"
         }
+        jsAjax.ajax(params, function(data) {
+            if(callback) {
+                callback(data)
+            }
+        }, function(XMLHttpRequest) {
+            if(XMLHttpRequest == "relogin") {
+                mui.alert("登陆过期，请重新登陆")
+                location.href = "index.html"
+            } else {
+                mui.alert(XMLHttpRequest.responseJSON.message)
+            }
+        });
+    }
 
     function changePreOrderType(target, obj) {
         if(target.value == "sell") {
@@ -573,8 +578,13 @@
         $.each(preOrder, function(index, value) {
             li = document.createElement('li');
             li.className = 'mui-table-view-cell';
+            if(value.preTrade.coinType == "tfchain"){
+                value.preTrade.coinType = "TF";
+            }
+
             var str = template('tpl-' + type, {
-                item: value
+                item: value.preTrade,
+                name: value.name,
             })
             li.innerHTML = str;
             fragment.appendChild(li);
@@ -585,7 +595,7 @@
     function getPreTrade(type, page, callback) {
         console.log("获取挂单信息")
         var params = {};
-        params.url = "/trade/pre/list?size=10&type=" + type + "&page=" + page;
+        params.url = "/trade/pre/list?size=10&type=" + type + "&page=" + page + "&status=normal";
         jsAjax.ajax(params, function(data) {
             console.log(data)
             scrollPage[type] = data.page
@@ -612,12 +622,14 @@
             }
         }
         var _ideaPrice = $("#IdeaPriceIpt").val();
-        var _minPrice = $("#MinPriceIpt").val();
-        var _maxPrice = $("#MaxPriceIpt").val()
+        // var _minPrice = $("#MinPriceIpt").val();
+        // var _minPrice = _ideaPrice;
+        // var _maxPrice = $("#MaxPriceIpt").val()
         var _minAmount = $("#MinAmountIpt").val();
-        var _maxAmount = $("#MaxAmountIpt").val();
         var _message = $("#MsgIpt").val();
         var _allAmount = $("#AllAmountIpt").val();
+        // var _maxAmount = $("#MaxAmountIpt").val();
+        var _maxAmount = _allAmount;
         if(!_ideaPrice) {
             mui.alert("请输入期望价格")
             return;
@@ -627,7 +639,7 @@
             mui.alert("期望价格输入数字")
             return;
         }
-        if(_tradeType == "sell" && !_minPrice) {
+        /*if(_tradeType == "sell" && !_minPrice) {
             mui.alert("请输入最低价格")
             return;
         }
@@ -642,7 +654,7 @@
         if(isNaN(_maxPrice)) {
             mui.alert("最高价格输入数字")
             return;
-        }
+        }*/
         if(!_allAmount) {
             mui.alert("请输入总量")
             return;
@@ -670,9 +682,9 @@
         var data = {};
         //data.tradeType = $("input[name=tradeType]").val();
         data.tradeType = _tradeType;
-        data.ideaPrice = _ideaPrice;
-        data.minPrice = _minPrice;
-        data.maxPrice = _maxPrice;
+        data.ideaUnivalent = _ideaPrice;
+        // data.minUnivalent  = _minPrice;
+        // data.maxUnivalent  = _maxPrice;
         data.minAmount = _minAmount;
         data.maxAmount = _maxAmount;
         data.message = _message;
@@ -687,7 +699,8 @@
         };
         // todo validate data
         jsAjax.ajax(params, function(data) {
-            console.log("##### 发布挂单")
+            mui.alert("发布成功");
+            location.href = "index.html"
         }, function(XMLHttpRequest) {
             if(XMLHttpRequest == "relogin") {
                 mui.alert("登陆过期，请重新登陆")

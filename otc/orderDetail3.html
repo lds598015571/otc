@@ -62,9 +62,9 @@
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
 			<div class="info_title" >
-				实名信息
+				购买者
 			</div>
-			<div class="info_content" id="SellerNameArea"></div>
+			<div class="info_content" id="BuyerNameArea"></div>
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
@@ -143,7 +143,7 @@
         }else{
             $("#EnsureStatusDisplayArea").text("未知");
         }
-        $("#SellerNameArea").text(trade.sellerName);
+        $("#BuyerNameArea").text(buyer.name + " / " + buyer.mobile);
         $("#MoneyArea").text(trade.money);
         $("#AmountArea").text(trade.amount);
         $("#UnivalentArea").text(trade.univalent);

@@ -64,7 +64,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>验证码</label>
-					<button class="yzm_btn" type="button" onclick="sendCode()">获取验证码</button>
+					<button class="yzm_btn" type="button" onclick="sendCode()" >获取验证码</button>
 					<input type="number" id="CodeIpt" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 39%;" />
 
 				</div>
@@ -106,14 +106,14 @@
 				}
 				console.log("获取验证码")
 				document.querySelector(".yzm_btn").disabled = "disabled"
-				setTime();
 				var params = {
 					url: "/member/regist/code/" + mobile, // todo
 				};
 				// todo validate data
 				jsAjax.ajax(params, function(data) {
-					mui.alert("验证码发送成功： " + data);
-				}, function(XMLHttpRequest) {
+					mui.alert("验证码发送成功");
+                    setTime();
+                }, function(XMLHttpRequest) {
 					if(XMLHttpRequest == "relogin") {
 						mui.alert("登陆过期，请重新登陆")
 						location.href = "index.html"
