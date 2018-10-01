@@ -180,6 +180,9 @@
 				jsAjax.ajax(param, function(data) {
 					location.href = "login.html";
 				}, function(XMLHttpRequest) {
+                    document.querySelector(".yzm_btn").removeAttribute("disabled");
+                    document.querySelector(".yzm_btn").innerHTML = "获取验证码"
+                    downTime = 60;
 					if(XMLHttpRequest == "relogin") {
 						mui.alert("登陆过期，请重新登陆")
 						location.href = "index.html"

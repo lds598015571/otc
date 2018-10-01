@@ -74,7 +74,13 @@
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
-				数量（TF）
+				币种
+			</div>
+			<div class="info_content" id="CoinTypeArea"></div>
+		</li>
+		<li class="mui-table-view-cell">
+			<div class="info_title">
+				数量（个）
 			</div>
 			<div class="info_content" id="AmountArea"></div>
 		</li>
@@ -117,7 +123,7 @@
 	<div class="mui-button-row">
 		<!-- 根据不同的状态显示按钮 -->
 		<div style="display: none;" id="Tips">等待对方确认付款</div>
-		<button type="button" class="mui-btn mui-btn-primary" id="ReleaseBtn" style="display: none;" onclick="ensureGet()">释放比特币</button>
+		<button type="button" class="mui-btn mui-btn-primary" id="ReleaseBtn" style="display: none;" onclick="ensureGet()">确认释放</button>
 	</div>
 </div>
 <script src="js/mui.min.js"></script>
@@ -140,6 +146,8 @@
         }else if(trade.ensureStatus == "none") {
             $("#Tips").show();
             $("#EnsureStatusDisplayArea").text("待确认付款");
+        }else if(trade.ensureStatus == "ensure4get") {
+            $("#EnsureStatusDisplayArea").text("已释放");
         }else{
             $("#EnsureStatusDisplayArea").text("未知");
         }
@@ -150,6 +158,7 @@
         $("#CreateTimeArea").text(jsAjax.formatLongTime(trade.createTime))
         $("#RealNameArea").text(buyer.realName);
         $("#AlipayArea").text(buyer.alipayAddress);
+        $("#CoinTypeArea").text(trade.coinType)
     });
 
     function ensureGet(){

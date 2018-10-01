@@ -74,6 +74,12 @@
 		</li>
 		<li class="mui-table-view-cell">
 			<div class="info_title">
+				币种
+			</div>
+			<div class="info_content" id="CoinTypeArea"></div>
+		</li>
+		<li class="mui-table-view-cell">
+			<div class="info_title">
 				数量（TF）
 			</div>
 			<div class="info_content" id="AmountArea"></div>
@@ -94,7 +100,7 @@
 	<ul class="mui-table-view">
 		<li class="mui-table-view-cell">
 			<div class="order_num">
-				收款方：
+				收款方式：
 			</div>
 			<div class="" style="float: right;color: blue;">
 				支付宝
@@ -139,6 +145,8 @@
         }else if(trade.ensureStatus == "none") {
             $("#MarkPayBtn").show();
             $("#EnsureStatusDisplayArea").text("待确认付款");
+        }else if(trade.ensureStatus == "ensure4get") {
+            $("#EnsureStatusDisplayArea").text("已释放");
         }else{
             $("#EnsureStatusDisplayArea").text("未知");
         }
@@ -149,6 +157,8 @@
         $("#CreateTimeArea").text(jsAjax.formatLongTime(trade.createTime))
         $("#RealNameArea").text(seller.realName);
         $("#AlipayArea").text(seller.alipayAddress);
+        $("#CoinTypeArea").text(trade.coinType)
+
     });
 
     function ensurePay(){
