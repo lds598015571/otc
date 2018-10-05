@@ -181,6 +181,12 @@
 		.server {
 			margin-bottom: 20px;
 		}
+		.inmoney{
+			border: solid 2px #dd524d;
+		}
+		.platform{
+			border: solid 2px dodgerblue;
+		}
 	</style>
 </head>
 
@@ -193,10 +199,10 @@
 		<span class="mui-icon mui-icon-undo"></span>
 		<span class="mui-tab-label">购买</span>
 	</a>
-	<!--	<a id="Tab2" class="mui-tab-item" onclick="changeTab('item2mobile')">
+		<a id="Tab2" class="mui-tab-item" href="#item2mobile" >
             <span class="mui-icon mui-icon-redo"></span>
             <span class="mui-tab-label">出售</span>
-        </a>-->
+        </a>
 	<a id="Tab3" class="mui-tab-item" href="#item3mobile"> <!--onclick="changeTab('item3mobile')"-->
 		<!--href="#item3mobile"-->
 		<span class="mui-icon mui-icon-paperplane"></span>
@@ -222,13 +228,13 @@
 				</div>
 			</div>
 			<!-- 出售单列表 -->
-			<!--<div id="item2mobile" class="mui-slider-item mui-control-content">
+			<div id="item2mobile" class="mui-slider-item mui-control-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll" id="tfsell-scroll">
-						<ul class="mui-table-view" id="tf-sell"></ul>
+						<ul class="mui-table-view" id="tf-buy"></ul>
 					</div>
 				</div>
-			</div>-->
+			</div>
 			<!-- 发布 -->
 			<div id="item3mobile" class="mui-slider-item mui-control-content " style="overflow-y:auto;">
 				<div class="mui-col-sm-12">
@@ -244,10 +250,10 @@
 								<label>在线出售TF</label>
 								<input name="tradeType" value="sell" type="radio" checked onchange="changePreOrderType(this)" />
 							</div>
-							<!--<div class="mui-input-row mui-radio">
+							<div class="mui-input-row mui-radio">
 								<label>在线购买TF</label>
 								<input name="tradeType" value="buy" type="radio" onchange="changePreOrderType(this)" />
-							</div>-->
+							</div>
 						</form>
 					</div>
 					<div class="mui-card">
@@ -366,9 +372,9 @@
 <script src="js/arttmpl.js"></script>
 <script src="js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-<!--<script type="text/template" id="tpl-buy">
+<script type="text/template" id="tpl-buy">
 	<%
-	<div class="mui-table">
+	<div class="mui-table ">
 		<div class="mui-table-cell mui-col-xs-10">
 			<h4 class="mui-ellipsis"><%=item.id%> | <%=name%></h4>
 			<span class="mui-badge mui-badge-success">支付宝</span>
@@ -377,15 +383,15 @@
 			<p class="mui-h6 mui-ellipsis">限额 <%=item.minAmount%> - <%=item.maxAmount%></p>
 		</div>
 		<div class="mui-table-cell mui-col-xs-2 mui-text-right">
-			<span class="mui-h5"><%=item.ideaUnivalent%></span>
-			<button class="list_btn" name="<%=item.id%>">购买<%=item.coinType%></button>
+			<span class="mui-h5"><%=item.ideaUnivalent%> CNY</span>
+			<button class="list_btn" name="<%=item.id%>" onclick="toSellpage(<%=item.id%>)">出售<%=item.coinType%></button>
 		</div>
 	</div>
 	%>
-</script>-->
+</script>
 <script type="text/template" id="tpl-sell">
 	<%
-	<div class="mui-table">
+	<div class="mui-table ">
 		<div class="mui-table-cell mui-col-xs-10">
 			<h4 class="mui-ellipsis"><%=item.id%> | <%=name%></h4> <!--<%=item%>-->
 			<span class="mui-badge mui-badge-success">支付宝</span>
@@ -453,14 +459,14 @@
                     }
                 }
             })
-            /*$("#tfsell-scroll").pullToRefresh({
+            $("#tfsell-scroll").pullToRefresh({
                 down: {
                     callback: function() {
                         console.log("刷新出售单数据")
                         var self = this;
                         setTimeout(function() {
-                            getPreTrade("sell", 1, function(data){
-                                fill(data, "sell", true)
+                            getPreTrade("buy", 1, function(data){
+                                fill(data, "buy", true)
                             });
                             self.endPullDownToRefresh()
                         }, 1000);
@@ -471,20 +477,15 @@
                         console.log("加载更多出售单数据")
                         var self = this;
                         setTimeout(function() {
-                            getPreTrade("sell", scrollPage.sell + 1, function(data){
-                                fill(data, "sell")
+                            getPreTrade("buy", scrollPage.sell + 1, function(data){
+                                fill(data, "buy")
                             });
                             self.endPullUpToRefresh();
                         }, 1000);
                     }
                 }
-            })*/
-            /*getPreTrade("buy", 1, function(data){
-                fill(data, "buy", true)
-            })*/
-            getPreTrade("sell", 1, function(data){
-                fill(data, "sell", true)
             })
+            init();
         });
 
         mui("#item1mobile").on("tap", ".list_btn", function(event) {
@@ -492,20 +493,34 @@
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
             location.href = "buy.html?id=" + id;
         });
-        /*mui("#item2mobile").on("tap", ".list_btn", function(target) {
+        mui("#item2mobile").on("tap", ".list_btn", function(target) {
             console.log(event)
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
-            location.href = "buy.html?id=" + id;
-        });*/
+            location.href = "sell.html?id=" + id;
+        });
         mui(".mui-bar-tab").on("tap", ".mui-tab-item",function(event){
             var tab = this.id;
             changeTab(tab)
 		})
     })(mui);
 
+    function init() {
+        getPreTrade("buy", 1, function(data){
+            fill(data, "buy", true)
+        })
+        getPreTrade("sell", 1, function(data){
+            fill(data, "sell", true)
+        })
+    }
+
+
+
 	function toBuypage(id){
         location.href = "buy.html?id=" + id;
 	}
+	function toSellpage(id){
+        location.href = "sell.html?id=" + id;
+    }
 
     function changeTab(tab) {
         // document.getElementById(tab).scrollIntoView();
@@ -526,8 +541,8 @@
                 // $("#UserScore").text(info.score);
 
                 if(info.accountInfo){
-                    $("#UserBalance").text(info.accountInfo.tfchain_balance);
-                    $("#UserFreeze").text(info.accountInfo.tfchain_freeze);
+                    $("#UserBalance").text(info.accountInfo.tfcoin_balance);
+                    $("#UserFreeze").text(info.accountInfo.tfcoin_freeze);
                 }
             })
         }
@@ -557,7 +572,7 @@
     }
 
     function changePreOrderType(target, obj) {
-        if(target.value == "sell") {
+        /*if(target.value == "sell") {
             $(".input-buy-max").hide();
             $(".input-sell-min").show();
             return;
@@ -566,7 +581,7 @@
             $(".input-sell-min").hide();
             $(".input-buy-max").show();
             return;
-        }
+        }*/
     }
 
     function fill(data, type, reload) {
@@ -583,11 +598,10 @@
         var li;
         $.each(preOrder, function(index, value) {
             li = document.createElement('li');
-            li.className = 'mui-table-view-cell';
-            if(value.preTrade.coinType == "tfchain"){
+            li.className = 'mui-table-view-cell ' + value.memberFlag;
+            if(value.preTrade.coinType == "tfcoin"){
                 value.preTrade.coinType = "TF";
             }
-
             var str = template('tpl-' + type, {
                 item: value.preTrade,
                 name: value.name,
@@ -697,7 +711,7 @@
         data.allAmount = _allAmount;
         // data.payChannel = $("#PayChannelIpt").val();
         data.memberId = 16;
-        data.coinType = "tfchain";
+        data.coinType = "tfcoin";
         var params = {
             data: data,
             url: "/trade/pre",

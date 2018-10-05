@@ -307,7 +307,7 @@
             amount: $("#GdAmount").val(),
             money: $("#GdMoney").val()
         };
-        if(data.amount == "" || data.amount == null || parseInt(data.amount) > info.preTrade.maxAmount || data.amount < info.preTrade.minAmount) {
+        if(data.amount == "" || data.amount == null || parseFloat(data.amount) > parseFloat(info.preTrade.maxAmount) || parseFloat(data.amount < info.preTrade.minAmount)) {
             mui.alert("请输入正确的数量，不能超出限额");
             return;
         }
@@ -324,7 +324,8 @@
         })
     }
     function fitMoneyIpt(ele){
-        $("#GdMoney").val(jsAjax.numMulti(ele.value, info.preTrade.ideaUnivalent)); // ele.value * info.preTrade.ideaUnivalent
+        $("#GdMoney").val(jsAjax.numFormat(
+            jsAjax.numMulti(ele.value, info.preTrade.ideaUnivalent), 4)); // ele.value * info.preTrade.ideaUnivalent
         // 填充usdt的显示
 		
         $(".coinamount").text(jsAjax.numFormat(jsAjax.numDiv(
