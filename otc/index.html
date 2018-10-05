@@ -197,12 +197,12 @@
             <span class="mui-icon mui-icon-redo"></span>
             <span class="mui-tab-label">出售</span>
         </a>-->
-	<a id="Tab3" class="mui-tab-item" onclick="changeTab('item3mobile')">
+	<a id="Tab3" class="mui-tab-item" href="#item3mobile"> <!--onclick="changeTab('item3mobile')"-->
 		<!--href="#item3mobile"-->
 		<span class="mui-icon mui-icon-paperplane"></span>
 		<span class="mui-tab-label">发布</span>
 	</a>
-	<a id="Tab4" class="mui-tab-item" onclick="changeTab('item4mobile')">
+	<a id="Tab4" class="mui-tab-item" href="#item4mobile"> <!--onclick="changeTab('item4mobile')"-->
 		<!--href="#item4mobile"-->
 		<span class="mui-icon mui-icon-contact"></span>
 		<span class="mui-tab-label">我的</span>
@@ -498,7 +498,8 @@
             location.href = "buy.html?id=" + id;
         });*/
         mui(".mui-bar-tab").on("tap", ".mui-tab-item",function(event){
-            console.log(event);
+            var tab = this.id;
+            changeTab(tab)
 		})
     })(mui);
 
@@ -507,14 +508,14 @@
 	}
 
     function changeTab(tab) {
-        document.getElementById(tab).scrollIntoView();
-        if("item3mobile" == tab){
+        // document.getElementById(tab).scrollIntoView();
+        if("Tab3" == tab){
             coinPrice("tfchain", function(data){
                 $("#CoinPrice").text(data.tfcoin)
             })
             $("#IndexNavTitle").text("发布挂单");
         }
-        if("item4mobile" == tab){
+        if("Tab4" == tab){
             $("#IndexNavTitle").text("个人中心");
             getUserInfo(function(info){
                 console.log(info)
@@ -530,10 +531,10 @@
                 }
             })
         }
-        if("item2mobile" == tab) {
+        if("Tab2" == tab) {
             $("#IndexNavTitle").text("出售列表");
         }
-        if("item1mobile" == tab) {
+        if("Tab1" == tab) {
             $("#IndexNavTitle").text("购买列表");
         }
     }
