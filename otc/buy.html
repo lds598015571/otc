@@ -6,6 +6,7 @@
 	<title>购买</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/base.css" rel="stylesheet" />
 	<style type="text/css">
 		.mui-row {
 			background-color: #fff;
@@ -209,6 +210,19 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="mui-row" style="margin-top: 10px;margin-bottom:20px;">
+		<div class="mui-col-xs-12">
+			<div class="user_tx">
+				<div class="">
+					等值usdt转换：
+					<br>
+					当前 USDT 价格: <span class="coinprice usdt"></span> CNY,  您此次购买的tf相当于 <span class="coinamount usdt">0</span> 个 USDT
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="mui-row" style="margin-top: 10px;margin-bottom: 20%;">
 		<div class="mui-col-xs-12">
 			<div class="user_tx">
@@ -253,10 +267,14 @@
     mui.init()
 
     var info = {};
+    var prices = {};
 
-    document.querySelector("header").querySelector("a").onclick = function() {
-        history.back(-1)
-    }
+    jsAjax.getPrices(function(data){
+        prices = data;
+        $(".coinprice").text(prices.usdt);
+	}, function (error) {
+        mui.alert(error.responseJSON.message)
+    })
 
     jsAjax.getPreTrade(jsAjax.getQueryString("id"),function(data){
         console.log(data);
@@ -306,8 +324,14 @@
         })
     }
     function fitMoneyIpt(ele){
-        console.log(ele.value);
-        $("#GdMoney").val(ele.value * info.preTrade.ideaUnivalent);
+        $("#GdMoney").val(jsAjax.numMulti(ele.value, info.preTrade.ideaUnivalent)); // ele.value * info.preTrade.ideaUnivalent
+        // 填充usdt的显示
+		
+        $(".coinamount").text(jsAjax.numFormat(jsAjax.numDiv(
+                jsAjax.numMulti(ele.value, info.preTrade.ideaUnivalent),
+				prices.usdt),
+			4));
+
     }
 
     function submitTrade(){

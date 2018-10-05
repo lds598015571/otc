@@ -8,6 +8,8 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/base.css" rel="stylesheet" />
+
 	<!-- http://dev.dcloud.net.cn/mui/pulldown/ -->
 	<style type="text/css">
 		html,
@@ -187,7 +189,7 @@
 	<h1 class="mui-title" id="IndexNavTitle">购买列表</h1>
 </header>
 <nav class="mui-bar mui-bar-tab">
-	<a id="Tab1" class="mui-tab-item mui-active" onclick="changeTab('item1mobile')">
+	<a id="Tab1" class="mui-tab-item mui-active" href="#item1mobile"> <!--onclick="changeTab('item1mobile')"-->
 		<span class="mui-icon mui-icon-undo"></span>
 		<span class="mui-tab-label">购买</span>
 	</a>
@@ -495,6 +497,9 @@
             var id = event.target.name; // 取 button 中name属性，跳页面时带上
             location.href = "buy.html?id=" + id;
         });*/
+        mui(".mui-bar-tab").on("tap", ".mui-tab-item",function(event){
+            console.log(event);
+		})
     })(mui);
 
 	function toBuypage(id){

@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+	<link href="css/base.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/mui.min.css">
 	<style>
 		.mui-content {
@@ -118,7 +118,25 @@
 			</div>
 			<div class="" style="float: left;" id="AlipayArea"></div>
 		</li>
-
+	</ul>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<div class="order_num">
+				转换usdt等值
+			</div>
+		</li>
+		<li class="mui-table-view-cell">
+			<div class="" style="float: left; width: 40%;">
+				交易时usdt价格
+			</div>
+			<div class="" style="float: left;" id="UsdtPriceArea"></div>
+		</li>
+		<li class="mui-table-view-cell">
+			<div class="" style="float: left; width: 40%;">
+				等值usdt数量
+			</div>
+			<div class="" style="float: left;" id="UsdtAmountArea"></div>
+		</li>
 	</ul>
 	<div class="mui-button-row">
 		<!--<button type="button" class="mui-btn mui-btn-danger">取消订单</button>-->
@@ -159,6 +177,8 @@
         $("#AlipayArea").text(seller.alipayAddress);
         $("#CoinTypeArea").text(trade.coinType)
 
+        $("#UsdtPriceArea").text(trade.usdtPrice);
+        $("#UsdtAmountArea").text(trade.usdtAmount);
     });
 
     function ensurePay(){
