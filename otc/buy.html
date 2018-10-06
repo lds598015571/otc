@@ -347,7 +347,7 @@
 		};
         jsAjax.ajax(params, function(data) {
             mui.alert("购买成功")
-            location.href = "index.html";
+            location.href = "order_list.html";
         }, function(XMLHttpRequest) {
             if(XMLHttpRequest == "relogin") {
                 mui.alert("登陆过期，请重新登陆")

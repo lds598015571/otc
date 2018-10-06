@@ -96,9 +96,7 @@
 			<div class="info_title">
 				放币时间
 			</div>
-			<div class="info_content">
-				2018-9-25 16:05:20
-			</div>
+			<div class="info_content" id="FinishTimeArea"></div>
 		</li>
 	</ul>
 	<ul class="mui-table-view">
@@ -165,6 +163,7 @@
         $("#AmountArea").text(trade.amount);
         $("#UnivalentArea").text(trade.univalent);
         $("#CreateTimeArea").text(jsAjax.formatLongTime(trade.createTime))
+        $("#FinishTimeArea").text(jsAjax.formatLongTime(trade.finishTime))
 
         $("#SellerAlipayArea").text(seller.alipayAddress);
         $("#SellerRealNameArea").text(seller.realName);
