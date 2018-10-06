@@ -6,9 +6,14 @@
 	<title>充值</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/base.css" rel="stylesheet" />
+
 </head>
 
 <style type="text/css">
+	.mui-content{
+		over-flow: auto
+	}
 	.mui-card, .huhu-form{
 		top: 50px;
 		margin-top: 50px;
@@ -58,9 +63,11 @@
 	</a>
 	<div class="mui-collapse-content">
 		<div class="userQRCodeImageDiv" id="<%=item.coinType%>Img"></div>
-		<div class="userQRCodeCardNum" >
+		<div class="userQRCodeCardNum" id="<%=item.coinType%>Address">
 			<%=item.coinAddress%>
 		</div>
+		<button type="button" class="mui-btn mui-btn-primary" onclick="ensureCharge()">确认已充值</button>
+		<button type="button" class="mui-btn mui-btn-primary" onclick="copyAddress('<%=item.coinType%>'+'Address')">复制地址</button>
 	</div>
 	%>
 </script>
@@ -74,6 +81,18 @@
 
         })
     })(mui)
+
+	function ensureCharge(){
+		var params = {
+		    url: "/member/coin/charge?coinType=tfcoin",
+		}
+		jsAjax.ajax(params, function(data){
+            mui.toast("正在查询。");
+		}, function(error){
+		    mui.toast(error.responseJSON.message)
+		})
+	}
+
     function getCoinAddress(){
         /*var data = [
             {coinType: "tfchain", coinAddress: "http://www.baidu.com"},
@@ -135,6 +154,18 @@
             text: coinAddress
         });
     }
+    function copyAddress(id){
+        const input = document.createElement('input');
+        document.body.appendChild(input);
+        input.setAttribute("type","text");
+        input.setAttribute('value', $("#" + id).text().trim());
+        input.select();
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+           mui.alert('复制成功');
+        }
+        document.body.removeChild(input);
+	}
 </script>
 </body>
 

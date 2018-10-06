@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+	<link href="css/base.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/mui.min.css">
 	<style>
 		html,
@@ -150,6 +150,12 @@
 			font-size: 18px;
 			color: #000000;
 		}
+		.status_waiting{
+			color: red;
+		}
+		.status_finished{
+			color: cornflowerblue;
+		}
 	</style>
 </head>
 
@@ -202,7 +208,7 @@
 	<div class="mui-to-page" > <!--data-id="<%=item.id%>" data-status="<%=item.status%>" data-type="<%=item.tradeType%>"-->
 	<div class="list_content1"> <!-- onclick="detailTrade(<%=item.id%>, <%=item.status%>, <%=item.tradeType%>)-->
 		<div class="cont_type cont_type_<%=item.tradeType%>">
-			<%=item.tradeTypeDisplay%>
+			<%=type%>
 		</div>
 		<div class="cont_tile">
 			<%=item.coinType%>
@@ -210,7 +216,7 @@
 		<div class="cont_time">
 			<%=item.createTimeDisplay%>
 		</div>
-		<div class="jy_type" style="float: right;color: red;">
+		<div class="jy_type status_<%=item.status%>" style="float: right;">
 			<%=item.statusDisplay%>
 		</div>
 	</div>
@@ -325,15 +331,22 @@
         $.each(preOrder, function(index, value){
             li = document.createElement('li');
             li.className = 'mui-table-view-cell';
-            li.dataStatus=value.status;
-            li.dataType=value.tradeType;
-            li.dataTid=value.id;
+            li.dataStatus=value.trade.status;
+            li.dataType=value.tradeType2member;
+            li.dataTid=value.trade.id;
             /*li.addEventListener("onclick", function(){
                 detailTrade(value.id, value.status, value.tradeType)
 			});*/
-            parse(value)
+            parse(value.trade)
+            if(value.tradeType2member == "sell"){
+                value.tradeTypeDisplay = "卖";
+            }
+            if(value.tradeType2member == "buy"){
+                value.tradeTypeDisplay = "买";
+            }
             var str = template('tpl-order', {
-                item: value
+                item: value.trade,
+				type: value.tradeTypeDisplay
             })
             li.innerHTML = str;
             fragment.appendChild(li);
@@ -364,12 +377,6 @@
     }
 
     function parse(trade) {
-        if(trade.tradeType == "sell"){
-            trade.tradeTypeDisplay = "卖";
-        }
-        if(trade.tradeType == "buy"){
-            trade.tradeTypeDisplay = "买";
-        }
         var date = new Date(trade.createTime);
         trade.createTimeDisplay = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
         if(trade.status == "waiting"){
